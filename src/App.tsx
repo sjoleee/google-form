@@ -1,14 +1,11 @@
 import React from "react";
-import { StyledEngineProvider } from "@mui/styled-engine";
 
-import GlobalStyle from "./style/GlobalStyle";
+import FormCard from "./components/FormCard";
 
-function App() {
-  return (
-    <StyledEngineProvider injectFirst>
-      <GlobalStyle />
-    </StyledEngineProvider>
-  );
-}
+const App = () => (
+  <FormCard isTitle>
+    <div>Title</div>
+  </FormCard>
+);
 
 export default App;
