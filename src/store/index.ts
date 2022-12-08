@@ -27,19 +27,17 @@ interface actionProps {
   payload: Partial<CardProps>;
 }
 
-const initialCards = [
-  {
-    id: "TitleCard",
-    title: "",
-    inputType: "string",
-    contents: { description: "" },
-    isFocused: false,
-  },
-];
+const initialCards = {
+  id: "TitleCard",
+  title: "제목 없는 설문지",
+  inputType: "text",
+  contents: { description: "" },
+  isFocused: false,
+};
 
-const createNewCard = () => ({
+const createNewCard = (title = "") => ({
   id: String(Date.now()),
-  title: "",
+  title,
   inputType: "radio",
   contents: {
     radio: [
@@ -54,11 +52,11 @@ const createNewCard = () => ({
 
 const cardSlice = createSlice({
   name: "Reducer",
-  initialState: [...initialCards] as CardProps[],
+  initialState: [initialCards] as CardProps[],
   reducers: {
-    add: (state: CardProps[]) => {
+    add: (state: CardProps[], action: actionProps) => {
       const newState = state.map((card) => ({ ...card, isFocused: false }));
-      newState.push(createNewCard());
+      newState.push(createNewCard(action.payload.title));
       return newState;
     },
 
