@@ -8,13 +8,13 @@ import App from "./App";
 import GlobalStyle from "./style/GlobalStyle";
 import Layout from "./components/Layout";
 import store from "./store";
-import theme from "./style/theme";
+import defaultTheme from "./style/defaultTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={defaultTheme}>
         <Provider store={store}>
           <GlobalStyle />
           <Layout>
