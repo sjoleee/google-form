@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const Contanier = styled.div<{ isClicked: boolean }>`
+export const Contanier = styled.div<{ isFocused: boolean }>`
   position: relative;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: ${({ isClicked }) => (isClicked ? "0 3px 5px rgba(0, 0, 0, 0.3)" : null)};
+  box-shadow: ${({ isFocused }) => (isFocused ? "0 3px 5px rgba(0, 0, 0, 0.3)" : null)};
 `;
 
-export const Card = styled.div<{ isClicked: boolean }>`
+export const Card = styled.div<{ isFocused: boolean }>`
   display: flex;
   border: ${({ theme }) => `1px solid ${theme.colors.GREY_HEAVY}`};
   border-radius: 8px;
@@ -17,11 +17,11 @@ export const Card = styled.div<{ isClicked: boolean }>`
   padding: 24px;
 `;
 
-export const ClickHighlight = styled.div<{ isClicked: boolean }>`
+export const ClickHighlight = styled.div<{ isFocused: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
-  background-color: ${({ theme, isClicked }) => (isClicked ? theme.colors.BLUE_HEAVY : "")};
+  background-color: ${({ theme, isFocused }) => (isFocused ? theme.colors.BLUE_HEAVY : "")};
   min-height: 100%;
   width: 6px;
   z-index: 10;

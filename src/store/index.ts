@@ -5,7 +5,7 @@ export interface CardProps {
   title: string;
   inputType: string;
   contents: contentsProps;
-  isfocused: boolean;
+  isFocused: boolean;
 }
 
 interface contentsProps {
@@ -24,7 +24,7 @@ interface ItemTypeProps {
 
 interface actionProps {
   type: string;
-  payload: CardProps;
+  payload: Partial<CardProps>;
 }
 
 const initialCards = [
@@ -33,7 +33,7 @@ const initialCards = [
     title: "",
     inputType: "string",
     contents: { description: "" },
-    isfocused: false,
+    isFocused: false,
   },
 ];
 
@@ -49,7 +49,7 @@ const createNewCard = () => ({
       },
     ],
   },
-  isfocused: true,
+  isFocused: true,
 });
 
 const cardSlice = createSlice({
@@ -57,12 +57,24 @@ const cardSlice = createSlice({
   initialState: [...initialCards] as CardProps[],
   reducers: {
     add: (state: CardProps[]) => {
-      state.push(createNewCard());
+      const newState = state.map((card) => ({ ...card, isFocused: false }));
+      newState.push(createNewCard());
+      return newState;
+    },
+
+    focus: (state: CardProps[], action: actionProps) => {
+      const newState = state.map((card) =>
+        action.payload.id === card.id
+          ? { ...card, isFocused: true }
+          : { ...card, isFocused: false },
+      );
+      return newState;
     },
   },
 });
 
 const store = configureStore({ reducer: cardSlice.reducer });
-export const { add } = cardSlice.actions;
+export type RootState = ReturnType<typeof store.getState>;
+export const { add, focus } = cardSlice.actions;
 
 export default store;
