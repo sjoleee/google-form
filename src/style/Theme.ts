@@ -10,7 +10,8 @@ const Theme: DefaultTheme = {
     BLUE_HEAVY: "#4285F4",
     GREY_LIGHT: "#F8F9FA",
     GREY_MEDIUM: "#F1F3F4",
-    GREY_HEAVY: "#6B6F74",
+    GREY_HEAVY: "#DADCE0",
+    GREY_EXTRA_HEAVY: "#6B6F74",
   },
 };
 
