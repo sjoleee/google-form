@@ -27,20 +27,37 @@ interface actionProps {
   payload: CardProps;
 }
 
+const initialCards = [
+  {
+    id: "TitleCard",
+    title: "",
+    inputType: "string",
+    contents: { description: "" },
+    isfocused: false,
+  },
+];
+
+const createNewCard = () => ({
+  id: String(Date.now()),
+  title: "",
+  inputType: "radio",
+  contents: {
+    radio: [
+      {
+        id: String(Date.now()),
+        title: "옵션 1",
+      },
+    ],
+  },
+  isfocused: true,
+});
+
 const cardSlice = createSlice({
   name: "Reducer",
-  initialState: [
-    {
-      id: "TitleCard",
-      title: "",
-      inputType: "string",
-      contents: { description: "" },
-      isfocused: false,
-    },
-  ] as CardProps[],
+  initialState: [...initialCards] as CardProps[],
   reducers: {
-    add: (state: CardProps[], action: actionProps) => {
-      state.push(action.payload);
+    add: (state: CardProps[]) => {
+      state.push(createNewCard());
     },
   },
 });
