@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import * as S from "./styles";
 
-const FormCard = ({ children, isTitle }: { children: React.ReactNode; isTitle: boolean }) => {
+const Card = ({ children, isTitle }: { children: React.ReactNode; isTitle: boolean }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   return (
@@ -21,4 +21,4 @@ const FormCard = ({ children, isTitle }: { children: React.ReactNode; isTitle: b
   );
 };
 
-export default FormCard;
+export default Card;
