@@ -12,7 +12,6 @@ export const Card = styled.div<{ isClicked: boolean }>`
   border: ${({ theme }) => `1px solid ${theme.colors.GREY_HEAVY}`};
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.WHITE};
-  height: 100%;
   min-height: 138px;
   width: 768px;
   padding: 24px;

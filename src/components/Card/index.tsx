@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import * as S from "./styles";
 
-const FormCard = ({ children, isTitle }: { children: React.ReactNode; isTitle: boolean }) => {
+const Card = ({ isTitle }: { isTitle?: boolean }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   return (
@@ -15,10 +15,13 @@ const FormCard = ({ children, isTitle }: { children: React.ReactNode; isTitle: b
       >
         {isTitle ? <S.TitleHighlight /> : null}
         <S.ClickHighlight isClicked={isClicked} />
-        {children}
       </S.Card>
     </S.Contanier>
   );
 };
 
-export default FormCard;
+Card.defaultProps = {
+  isTitle: false,
+};
+
+export default Card;
