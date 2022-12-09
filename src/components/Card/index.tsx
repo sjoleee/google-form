@@ -1,21 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { focus } from "../../store";
+import { CardProps, focus, inputTypes } from "../../store";
 import CardHeader from "../CardHeader";
+import TextFieldSection from "../TextFieldSection";
 import * as S from "./styles";
 
-const Card = ({
-  isTitle,
-  id,
-  isFocused,
-  title,
-}: {
+export interface extendedCardProps extends CardProps {
   isTitle: boolean;
-  id: string;
-  isFocused: boolean;
-  title: string;
-}) => {
+}
+
+const Card = ({ isTitle, id, isFocused, inputType }: extendedCardProps) => {
   const dispatch = useDispatch();
 
   const setIsFocused = () => {
@@ -32,7 +27,12 @@ const Card = ({
       >
         {isTitle ? <S.TitleHighlight /> : null}
         <S.ClickHighlight isFocused={isFocused} />
-        <CardHeader isTitle={isTitle} isFocused={isFocused} title={title} id={id} />
+        <CardHeader isTitle={isTitle} id={id} />
+        {inputType === inputTypes.TITLE ||
+        inputType === inputTypes.TEXT ||
+        inputType === inputTypes.TEXTAREA ? (
+          <TextFieldSection id={id} />
+        ) : null}
       </S.Card>
     </S.Contanier>
   );
