@@ -27,10 +27,18 @@ interface actionProps {
   payload: Partial<CardProps>;
 }
 
+export enum inputTypes {
+  "TEXT" = "TEXT",
+  "TEXTAREA" = "TEXTAREA",
+  "RADIO" = "RADIO",
+  "CHECKBOX" = "CHECKBOX",
+  "SELECT" = "SELECT",
+}
+
 const initialCards = {
   id: "TitleCard",
   title: "제목 없는 설문지",
-  inputType: "text",
+  inputType: inputTypes.TEXT,
   contents: { description: "" },
   isFocused: false,
 };
@@ -38,7 +46,7 @@ const initialCards = {
 const createNewCard = (title = "") => ({
   id: String(Date.now()),
   title,
-  inputType: "radio",
+  inputType: inputTypes.RADIO,
   contents: {
     radio: [
       {
@@ -68,11 +76,16 @@ const cardSlice = createSlice({
       );
       return newState;
     },
+
+    typeChange: (state: CardProps[], action: actionProps) => {
+      const targetCard = state.find((card) => card.id === action.payload.id) as CardProps;
+      targetCard.inputType = action.payload.inputType as string;
+    },
   },
 });
 
 const store = configureStore({ reducer: cardSlice.reducer });
 export type RootState = ReturnType<typeof store.getState>;
-export const { add, focus } = cardSlice.actions;
+export const { add, focus, typeChange } = cardSlice.actions;
 
 export default store;
