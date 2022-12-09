@@ -5,10 +5,13 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 `;
 
 export const TextField = styled(MuiTextField)<{ $isTitle: boolean; $isFocused: boolean }>`
-  width: ${({ $isTitle }) => ($isTitle ? "100%" : "446px")};
+  width: ${({ $isTitle }) => ($isTitle ? "100%" : "492px")};
+  padding: 8px 0;
 
   div {
     font-size: ${({ $isTitle }) => ($isTitle ? "32px" : "16px")};
@@ -27,7 +30,7 @@ export const TextField = styled(MuiTextField)<{ $isTitle: boolean; $isFocused: b
 
     ::before {
       border-bottom: ${({ $isFocused, theme }) =>
-        $isFocused ? `1px solid ${theme.colors.GREY_EXTRA_HEAVY}` : "none"};
+        $isFocused ? `1px solid ${theme.colors.GREY_HEAVY}` : "none"};
     }
 
     ::after {

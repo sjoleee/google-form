@@ -9,6 +9,7 @@ export const Contanier = styled.div<{ isFocused: boolean }>`
 
 export const Card = styled.div<{ isFocused: boolean }>`
   display: flex;
+  flex-direction: column;
   border: ${({ theme }) => `1px solid ${theme.colors.GREY_HEAVY}`};
   border-radius: 8px;
   background-color: ${({ theme }) => theme.colors.WHITE};
