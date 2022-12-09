@@ -8,16 +8,22 @@ import { add } from "../../store";
 const AddCardButton = () => {
   const dispatch = useDispatch();
 
-  const AddCard = () => {
-    dispatch(add());
+  const AddCard = (title?: string) => {
+    dispatch(add({ title }));
   };
 
   useEffect(() => {
-    AddCard();
+    AddCard("제목없는 질문");
   }, []);
 
   return (
-    <S.Fab color="primary" aria-label="add" onClick={AddCard}>
+    <S.Fab
+      color="primary"
+      aria-label="add"
+      onClick={() => {
+        AddCard();
+      }}
+    >
       <AddIcon />
     </S.Fab>
   );

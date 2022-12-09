@@ -1,16 +1,22 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { focus, RootState } from "../../store";
+import { focus } from "../../store";
+import CardHeader from "../CardHeader";
 import * as S from "./styles";
 
-const Card = ({ isTitle, id }: { isTitle?: boolean; id: string }) => {
+const Card = ({
+  isTitle,
+  id,
+  isFocused,
+  title,
+}: {
+  isTitle: boolean;
+  id: string;
+  isFocused: boolean;
+  title: string;
+}) => {
   const dispatch = useDispatch();
-
-  const isFocused = useSelector((state: RootState) => {
-    const currentCard = state.find((card) => card.id === id);
-    return currentCard ? currentCard.isFocused : false;
-  });
 
   const setIsFocused = () => {
     dispatch(focus({ id }));
@@ -26,13 +32,10 @@ const Card = ({ isTitle, id }: { isTitle?: boolean; id: string }) => {
       >
         {isTitle ? <S.TitleHighlight /> : null}
         <S.ClickHighlight isFocused={isFocused} />
+        <CardHeader isTitle={isTitle} isFocused={isFocused} title={title} id={id} />
       </S.Card>
     </S.Contanier>
   );
 };
 
-Card.defaultProps = {
-  isTitle: false,
-};
-
-export default Card;
+export default React.memo(Card);

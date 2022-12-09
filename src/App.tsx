@@ -13,7 +13,13 @@ const App = () => {
     <S.Container>
       <S.CardList>
         {cards.map((card) => (
-          <Card key={card.id} isTitle={card.id === "TitleCard"} id={card.id} />
+          <Card
+            key={card.id}
+            isTitle={card.id === "TitleCard"}
+            id={card.id}
+            isFocused={card.isFocused}
+            title={card.title}
+          />
         ))}
       </S.CardList>
       <AddCardButton />
