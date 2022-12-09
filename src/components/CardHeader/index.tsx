@@ -1,24 +1,19 @@
 import { MenuItem, SelectChangeEvent } from "@mui/material";
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
-import { inputTypes, typeChange } from "../../store";
+import { CardProps, inputTypes, typeChange } from "../../store";
+import { extendedCardProps } from "../Card";
 import * as S from "./styles";
 
-const CardHeader = ({
-  id,
-  isTitle,
-  isFocused,
-  cardTitle,
-}: {
-  id: string;
-  isTitle: boolean;
-  isFocused: boolean;
-  cardTitle: string;
-}) => {
+const CardHeader = ({ id, isTitle }: Pick<extendedCardProps, "id" | "isTitle">) => {
   const { control, setFocus, register } = useForm();
   const dispatch = useDispatch();
+  const { isFocused, cardTitle } = useSelector(
+    (state: CardProps[]) => state.find((card) => card.id === id) as CardProps,
+    shallowEqual,
+  );
 
   useEffect(() => {
     if (isFocused) setFocus(id);
@@ -64,4 +59,4 @@ const CardHeader = ({
   );
 };
 
-export default CardHeader;
+export default React.memo(CardHeader);
