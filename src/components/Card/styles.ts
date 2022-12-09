@@ -15,6 +15,7 @@ export const Card = styled.div<{ isFocused: boolean }>`
   min-height: 138px;
   width: 768px;
   padding: 24px;
+  box-sizing: border-box;
 `;
 
 export const ClickHighlight = styled.div<{ isFocused: boolean }>`
