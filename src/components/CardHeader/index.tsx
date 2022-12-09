@@ -16,7 +16,7 @@ const CardHeader = ({ id, isTitle }: Pick<extendedCardProps, "id" | "isTitle">) 
   );
 
   useEffect(() => {
-    if (isFocused) setFocus(id);
+    if (isFocused && !isTitle) setFocus(id);
   }, [isFocused]);
 
   const handleChange = (e: SelectChangeEvent<unknown>) => {
