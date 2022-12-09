@@ -8,8 +8,8 @@ import { add } from "../../store";
 const AddCardButton = () => {
   const dispatch = useDispatch();
 
-  const AddCard = (title?: string) => {
-    dispatch(add({ title }));
+  const AddCard = (cardTitle?: string) => {
+    dispatch(add({ cardTitle }));
   };
 
   useEffect(() => {

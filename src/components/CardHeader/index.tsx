@@ -10,12 +10,12 @@ const CardHeader = ({
   id,
   isTitle,
   isFocused,
-  title,
+  cardTitle,
 }: {
   id: string;
   isTitle: boolean;
   isFocused: boolean;
-  title: string;
+  cardTitle: string;
 }) => {
   const { control, setFocus, register } = useForm();
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const CardHeader = ({
     if (isFocused) setFocus(id);
   }, [isFocused]);
 
-  const handleChange = (e: SelectChangeEvent<unknown>, child: React.ReactNode) => {
+  const handleChange = (e: SelectChangeEvent<unknown>) => {
     dispatch(typeChange({ id, inputType: e.target.value as string }));
   };
 
@@ -39,7 +39,7 @@ const CardHeader = ({
             id="filled-basic"
             $isTitle={isTitle}
             $isFocused={isFocused}
-            defaultValue={title}
+            defaultValue={cardTitle}
             placeholder={isTitle ? "설문지 제목" : "질문"}
             variant="filled"
           />

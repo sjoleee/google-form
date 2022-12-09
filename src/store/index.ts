@@ -2,19 +2,10 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 export interface CardProps {
   id: string;
-  title: string;
+  cardTitle: string;
   inputType: string;
-  contents: contentsProps;
+  contents: string | ItemTypeProps[];
   isFocused: boolean;
-}
-
-interface contentsProps {
-  description?: string;
-  text?: string;
-  textarea?: string;
-  radio?: ItemTypeProps[];
-  checkbox?: ItemTypeProps[];
-  select?: ItemTypeProps[];
 }
 
 interface ItemTypeProps {
@@ -28,6 +19,7 @@ interface actionProps {
 }
 
 export enum inputTypes {
+  "TITLE" = "TITLE",
   "TEXT" = "TEXT",
   "TEXTAREA" = "TEXTAREA",
   "RADIO" = "RADIO",
@@ -37,24 +29,23 @@ export enum inputTypes {
 
 const initialCards = {
   id: "TitleCard",
-  title: "제목 없는 설문지",
-  inputType: inputTypes.TEXT,
-  contents: { description: "" },
+  cardTitle: "제목 없는 설문지",
+  inputType: inputTypes.TITLE,
+  contents: "",
   isFocused: false,
 };
 
-const createNewCard = (title = "") => ({
+const createNewCard = (cardTitle = "") => ({
   id: String(Date.now()),
-  title,
+  cardTitle,
   inputType: inputTypes.RADIO,
-  contents: {
-    radio: [
-      {
-        id: String(Date.now()),
-        title: "옵션 1",
-      },
-    ],
-  },
+  contents: [
+    {
+      id: String(Date.now()),
+      title: "옵션 1",
+    },
+  ],
+
   isFocused: true,
 });
 
@@ -64,7 +55,7 @@ const cardSlice = createSlice({
   reducers: {
     add: (state: CardProps[], action: actionProps) => {
       const newState = state.map((card) => ({ ...card, isFocused: false }));
-      newState.push(createNewCard(action.payload.title));
+      newState.push(createNewCard(action.payload.cardTitle));
       return newState;
     },
 

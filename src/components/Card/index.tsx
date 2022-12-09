@@ -9,12 +9,12 @@ const Card = ({
   isTitle,
   id,
   isFocused,
-  title,
+  cardTitle,
 }: {
   isTitle: boolean;
   id: string;
   isFocused: boolean;
-  title: string;
+  cardTitle: string;
 }) => {
   const dispatch = useDispatch();
 
@@ -32,7 +32,8 @@ const Card = ({
       >
         {isTitle ? <S.TitleHighlight /> : null}
         <S.ClickHighlight isFocused={isFocused} />
-        <CardHeader isTitle={isTitle} isFocused={isFocused} title={title} id={id} />
+        <CardHeader isTitle={isTitle} isFocused={isFocused} cardTitle={cardTitle} id={id} />
+        {}
       </S.Card>
     </S.Contanier>
   );
