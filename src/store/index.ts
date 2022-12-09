@@ -71,6 +71,15 @@ const cardSlice = createSlice({
     typeChange: (state: CardProps[], action: actionProps) => {
       const targetCard = state.find((card) => card.id === action.payload.id) as CardProps;
       targetCard.inputType = action.payload.inputType as string;
+      if (
+        action.payload.inputType === inputTypes.TITLE ||
+        action.payload.inputType === inputTypes.TEXT ||
+        action.payload.inputType === inputTypes.TEXTAREA
+      ) {
+        targetCard.contents = "";
+      } else {
+        targetCard.contents = [];
+      }
     },
   },
 });
