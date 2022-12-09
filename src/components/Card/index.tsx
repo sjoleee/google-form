@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { CardProps, focus, inputTypes } from "../../store";
 import CardHeader from "../CardHeader";
+import ItemTypeSection from "../ItemTypeSection";
 import TextFieldSection from "../TextFieldSection";
 import * as S from "./styles";
 
@@ -32,7 +33,9 @@ const Card = ({ isTitle, id, isFocused, inputType }: extendedCardProps) => {
         inputType === inputTypes.TEXT ||
         inputType === inputTypes.TEXTAREA ? (
           <TextFieldSection id={id} />
-        ) : null}
+        ) : (
+          <ItemTypeSection id={id} />
+        )}
       </S.Card>
     </S.Contanier>
   );
