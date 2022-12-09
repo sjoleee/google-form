@@ -3,17 +3,13 @@ import { useDispatch } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
 
 import * as S from "./styles";
-import { add } from "../../store";
+import { addCard } from "../../store";
 
 const AddCardButton = () => {
   const dispatch = useDispatch();
 
-  const AddCard = (cardTitle?: string) => {
-    dispatch(add({ cardTitle }));
-  };
-
   useEffect(() => {
-    AddCard("제목없는 질문");
+    dispatch(addCard({ cardTitle: "제목없는 질문" }));
   }, []);
 
   return (
@@ -21,7 +17,7 @@ const AddCardButton = () => {
       color="primary"
       aria-label="add"
       onClick={() => {
-        AddCard();
+        dispatch(addCard({}));
       }}
     >
       <AddIcon />
