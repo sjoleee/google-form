@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { CardProps, copyCard } from "../../store";
+import { CardProps, copyCard, removeCard } from "../../store";
 import * as S from "./styles";
 
 const CardFooter = ({ id }: Pick<CardProps, "id">) => {
@@ -13,7 +13,11 @@ const CardFooter = ({ id }: Pick<CardProps, "id">) => {
           dispatch(copyCard({ cardId: id, copiedCardId: String(Date.now()) }));
         }}
       />
-      <S.Trash />
+      <S.Trash
+        onClick={() => {
+          dispatch(removeCard({ cardId: id }));
+        }}
+      />
       <S.VerticalLine />
       <S.FormControlLabel
         control={<S.Switch name="required" />}

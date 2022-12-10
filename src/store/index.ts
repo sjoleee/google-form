@@ -93,6 +93,9 @@ const cardSlice = createSlice({
       return newState;
     },
 
+    removeCard: (state: CardProps[], action: actionProps) =>
+      state.filter((card) => card.id !== action.payload.cardId),
+
     focus: (state: CardProps[], action: actionProps) => {
       const newState = state.map((card) =>
         action.payload.id === card.id
@@ -166,7 +169,15 @@ const cardSlice = createSlice({
 
 const store = configureStore({ reducer: cardSlice.reducer });
 export type RootState = ReturnType<typeof store.getState>;
-export const { addCard, copyCard, focus, typeChange, addSelectItem, removeSelectItem, addEtcItem } =
-  cardSlice.actions;
+export const {
+  addCard,
+  copyCard,
+  removeCard,
+  focus,
+  typeChange,
+  addSelectItem,
+  removeSelectItem,
+  addEtcItem,
+} = cardSlice.actions;
 
 export default store;
