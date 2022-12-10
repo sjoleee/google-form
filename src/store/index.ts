@@ -8,14 +8,19 @@ export interface CardProps {
   isFocused: boolean;
 }
 
-interface ItemTypeProps {
+export interface ItemTypeProps {
   id: string;
-  title: string;
+  text?: string;
+  isEtc?: boolean;
+}
+
+interface PayloadProps {
+  [key: string]: string;
 }
 
 interface actionProps {
   type: string;
-  payload: Partial<CardProps>;
+  payload: PayloadProps;
 }
 
 export enum inputTypes {
@@ -42,18 +47,35 @@ const createNewCard = (cardTitle = "") => ({
   contents: [
     {
       id: String(Date.now()),
-      title: "옵션 1",
+      text: "옵션 1",
     },
   ],
-
   isFocused: true,
 });
+
+const sortEtcItem = (currentContents: ItemTypeProps[]) => {
+  const etcIndex = currentContents.findIndex((content) => content.isEtc);
+  if (etcIndex !== -1) {
+    const etcItem = { ...currentContents[etcIndex] };
+    currentContents.splice(etcIndex, 1);
+    currentContents.push(etcItem);
+  }
+  return currentContents;
+};
+
+const deleteEtcItem = (currentContents: ItemTypeProps[]) => {
+  const etcIndex = currentContents.findIndex((content) => content.isEtc);
+  if (etcIndex !== -1) {
+    currentContents.splice(etcIndex, 1);
+  }
+  return currentContents;
+};
 
 const cardSlice = createSlice({
   name: "Reducer",
   initialState: [initialCards] as CardProps[],
   reducers: {
-    add: (state: CardProps[], action: actionProps) => {
+    addCard: (state: CardProps[], action: actionProps) => {
       const newState = state.map((card) => ({ ...card, isFocused: false }));
       newState.push(createNewCard(action.payload.cardTitle));
       return newState;
@@ -70,22 +92,69 @@ const cardSlice = createSlice({
 
     typeChange: (state: CardProps[], action: actionProps) => {
       const targetCard = state.find((card) => card.id === action.payload.id) as CardProps;
-      targetCard.inputType = action.payload.inputType as string;
       if (
-        action.payload.inputType === inputTypes.TITLE ||
-        action.payload.inputType === inputTypes.TEXT ||
-        action.payload.inputType === inputTypes.TEXTAREA
+        !(
+          targetCard.inputType === inputTypes.RADIO ||
+          targetCard.inputType === inputTypes.CHECKBOX ||
+          targetCard.inputType === inputTypes.SELECT
+        ) &&
+        (action.payload.inputType === inputTypes.RADIO ||
+          action.payload.inputType === inputTypes.CHECKBOX ||
+          action.payload.inputType === inputTypes.SELECT)
+      ) {
+        targetCard.contents = [
+          {
+            id: String(Date.now()),
+            text: "옵션 1",
+          },
+        ];
+      } else if (
+        (targetCard.inputType === inputTypes.RADIO ||
+          targetCard.inputType === inputTypes.CHECKBOX ||
+          targetCard.inputType === inputTypes.SELECT) &&
+        !(
+          action.payload.inputType === inputTypes.RADIO ||
+          action.payload.inputType === inputTypes.CHECKBOX ||
+          action.payload.inputType === inputTypes.SELECT
+        )
       ) {
         targetCard.contents = "";
-      } else {
-        targetCard.contents = [];
       }
+      if (
+        (targetCard.inputType === inputTypes.RADIO ||
+          targetCard.inputType === inputTypes.CHECKBOX) &&
+        action.payload.inputType === inputTypes.SELECT
+      ) {
+        deleteEtcItem(targetCard.contents as ItemTypeProps[]);
+      }
+      targetCard.inputType = action.payload.inputType as string;
+    },
+
+    addSelectItem: (state: CardProps[], action: actionProps) => {
+      const contents = state.find((card) => card.id === action.payload.id)
+        ?.contents as ItemTypeProps[];
+      contents.push({ id: action.payload.contentId, text: action.payload.text });
+      sortEtcItem(contents);
+    },
+
+    removeSelectItem: (state: CardProps[], action: actionProps) => {
+      const targetCard = state.find((card) => card.id === action.payload.cardId) as CardProps;
+      const contents = targetCard.contents as ItemTypeProps[];
+      const filteredContents = contents.filter((item) => item.id !== action.payload.contentId);
+      targetCard.contents = filteredContents;
+    },
+
+    addEtcItem: (state: CardProps[], action: actionProps) => {
+      const contents = state.find((card) => card.id === action.payload.id)
+        ?.contents as ItemTypeProps[];
+      contents.push({ id: action.payload.contentId, isEtc: true });
     },
   },
 });
 
 const store = configureStore({ reducer: cardSlice.reducer });
 export type RootState = ReturnType<typeof store.getState>;
-export const { add, focus, typeChange } = cardSlice.actions;
+export const { addCard, focus, typeChange, addSelectItem, removeSelectItem, addEtcItem } =
+  cardSlice.actions;
 
 export default store;

@@ -1,5 +1,5 @@
 import { MenuItem, SelectChangeEvent } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
@@ -8,16 +8,12 @@ import { extendedCardProps } from "../Card";
 import * as S from "./styles";
 
 const CardHeader = ({ id, isTitle }: Pick<extendedCardProps, "id" | "isTitle">) => {
-  const { control, setFocus, register } = useForm();
+  const { control, register } = useForm();
   const dispatch = useDispatch();
   const { isFocused, cardTitle } = useSelector(
     (state: CardProps[]) => state.find((card) => card.id === id) as CardProps,
     shallowEqual,
   );
-
-  useEffect(() => {
-    if (isFocused && !isTitle) setFocus(id);
-  }, [isFocused]);
 
   const handleChange = (e: SelectChangeEvent<unknown>) => {
     dispatch(typeChange({ id, inputType: e.target.value as string }));

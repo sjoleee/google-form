@@ -3,10 +3,9 @@ import { useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 
 import { CardProps, inputTypes } from "../../store";
-import { extendedCardProps } from "../Card";
 import * as S from "./styles";
 
-const TextFieldSection = ({ id }: Pick<extendedCardProps, "id">) => {
+const TextFieldSection = ({ id }: Pick<CardProps, "id">) => {
   const { control } = useForm();
 
   const { contents, inputType, isFocused } = useSelector((state: CardProps[]) =>

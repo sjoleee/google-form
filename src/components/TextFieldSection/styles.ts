@@ -3,12 +3,6 @@ import { TextField as MuiTextField } from "@mui/material";
 
 import { inputTypes } from "../../store";
 
-export const Container = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-`;
-
 export const TextField = styled(MuiTextField)<{
   $isTitle: boolean;
   $isFocused: boolean;
