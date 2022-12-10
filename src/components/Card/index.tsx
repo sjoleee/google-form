@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 import { CardProps, focus, inputTypes } from "../../store";
+import CardFooter from "../CardFooter";
 import CardHeader from "../CardHeader";
 import ItemTypeSection from "../ItemTypeSection";
 import TextFieldSection from "../TextFieldSection";
@@ -36,6 +37,7 @@ const Card = ({ isTitle, id, isFocused, inputType }: extendedCardProps) => {
         ) : (
           <ItemTypeSection id={id} />
         )}
+        {isFocused ? <CardFooter /> : null}
       </S.Card>
     </S.Contanier>
   );
