@@ -9,12 +9,14 @@ const CardFooter = ({ id }: Pick<CardProps, "id">) => {
   return (
     <S.Container>
       <S.Copy
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           dispatch(copyCard({ cardId: id, copiedCardId: String(Date.now()) }));
         }}
       />
       <S.Trash
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           dispatch(removeCard({ cardId: id }));
         }}
       />
