@@ -43,7 +43,7 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
               />
             )}
           />
-          {isFocused ? (
+          {isFocused && contents.length > 1 ? (
             <S.DeleteIcon
               onClick={() => {
                 dispatch(removeSelectItem({ cardId: id, contentId: content.id }));
@@ -53,21 +53,34 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
         </S.Container>
       ))}
       {isFocused ? (
-        <button
-          type="button"
-          onClick={() => {
-            const contentId = String(Date.now());
-            dispatch(
-              addSelectItem({
-                id,
-                contentId,
-                text: `옵션 ${contents.length + 1}`,
-              }),
-            );
-          }}
-        >
-          추가
-        </button>
+        <S.Container $isFocused={isFocused}>
+          {inputType === inputTypes.RADIO ? <S.Circle /> : null}
+          {inputType === inputTypes.CHECKBOX ? <S.Sqare /> : null}
+          {inputType === inputTypes.SELECT ? (
+            <S.NumberSpan>{contents.length + 1}</S.NumberSpan>
+          ) : null}
+          <S.ItemAddButton
+            type="button"
+            onClick={() => {
+              const contentId = String(Date.now());
+              dispatch(
+                addSelectItem({
+                  id,
+                  contentId,
+                  text: `옵션 ${contents.length + 1}`,
+                }),
+              );
+            }}
+          >
+            옵션 추가
+          </S.ItemAddButton>
+          {inputType !== inputTypes.SELECT ? (
+            <>
+              <span>또는</span>
+              <S.EtcAddButton type="button">기타 추가</S.EtcAddButton>
+            </>
+          ) : null}
+        </S.Container>
       ) : null}
     </>
   );

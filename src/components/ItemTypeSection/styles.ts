@@ -9,6 +9,7 @@ export const Container = styled.div<{ $isFocused: boolean }>`
   display: flex;
   width: 100%;
   align-items: center;
+  font-size: 14px;
 
   :hover {
     & .MuiInputBase-root {
@@ -82,4 +83,28 @@ export const NumberSpan = styled.span`
   text-align: center;
   box-sizing: border-box;
   padding-top: 5px;
+`;
+
+export const ItemAddButton = styled.button`
+  background-color: transparent;
+  border: none;
+  height: 30px;
+  padding: 4px 0 5px 0;
+  margin: 12px 8px;
+  color: ${({ theme }) => theme.colors.GREY_EXTRA_HEAVY};
+  :hover {
+    padding-bottom: 4px;
+    border-bottom: ${({ theme }) => `1px solid ${theme.colors.GREY_HEAVY}`};
+  }
+`;
+
+export const EtcAddButton = styled.button`
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+  padding: 8px 8px;
+  color: ${({ theme }) => theme.colors.BLUE_HEAVY};
+  :hover {
+    background-color: ${({ theme }) => theme.colors.BLUE_LIGHT};
+  }
 `;
