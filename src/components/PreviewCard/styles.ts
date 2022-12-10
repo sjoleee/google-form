@@ -7,7 +7,7 @@ export const Container = styled.div`
   margin-top: 16px;
 `;
 
-export const Card = styled.div<{ isTitle: boolean }>`
+export const Card = styled.div`
   display: flex;
   flex-direction: column;
   border: ${({ theme }) => `1px solid ${theme.colors.GREY_HEAVY}`};

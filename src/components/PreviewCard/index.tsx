@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import { CardProps, InputTypes, StateProps } from "../../store";
+import PreviewCardTitle from "../PreviewCardTitle";
 import * as S from "./styles";
 
 const PreviewCard = ({ id }: Pick<CardProps, "id">) => {
@@ -14,7 +15,10 @@ const PreviewCard = ({ id }: Pick<CardProps, "id">) => {
 
   return (
     <S.Container>
-      <S.Card isTitle={isTitle}>{isTitle ? <S.TitleHighlight /> : null}</S.Card>
+      <S.Card>
+        {isTitle ? <S.TitleHighlight /> : null}
+        <PreviewCardTitle id={id} />
+      </S.Card>
     </S.Container>
   );
 };

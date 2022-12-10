@@ -13,6 +13,7 @@ const defaultTheme: DefaultTheme = {
     GREY_MEDIUM: "#F1F3F4",
     GREY_HEAVY: "#DADCE0",
     GREY_EXTRA_HEAVY: "#6B6F74",
+    RED: "#d93025",
   },
 };
 
