@@ -63,6 +63,14 @@ const sortEtcItem = (currentContents: ItemTypeProps[]) => {
   return currentContents;
 };
 
+const deleteEtcItem = (currentContents: ItemTypeProps[]) => {
+  const etcIndex = currentContents.findIndex((content) => content.isEtc);
+  if (etcIndex !== -1) {
+    currentContents.splice(etcIndex, 1);
+  }
+  return currentContents;
+};
+
 const cardSlice = createSlice({
   name: "Reducer",
   initialState: [initialCards] as CardProps[],
@@ -111,6 +119,13 @@ const cardSlice = createSlice({
         )
       ) {
         targetCard.contents = "";
+      }
+      if (
+        (targetCard.inputType === inputTypes.RADIO ||
+          targetCard.inputType === inputTypes.CHECKBOX) &&
+        action.payload.inputType === inputTypes.SELECT
+      ) {
+        deleteEtcItem(targetCard.contents as ItemTypeProps[]);
       }
       targetCard.inputType = action.payload.inputType as string;
     },
