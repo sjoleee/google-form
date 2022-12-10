@@ -1,11 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 
-import { CardProps, InputTypes, StateProps } from "../../store";
+import { CardProps, InputTypes, setText, StateProps } from "../../store";
 import * as S from "./styles";
 
 const TextFieldSection = ({ id }: Pick<CardProps, "id">) => {
+  const dispatch = useDispatch();
   const { control } = useForm();
 
   const inputType = useSelector((state: StateProps) => {
@@ -25,6 +26,12 @@ const TextFieldSection = ({ id }: Pick<CardProps, "id">) => {
 
   const isTitle = inputType === InputTypes.TITLE;
 
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    dispatch(setText({ cardId: id, text: e.target.value }));
+  };
+
   const handlePlaceholder = () => {
     if (isTitle) return "설문지 설명";
     if (inputType === InputTypes.TEXT) return "단답형 텍스트";
@@ -42,6 +49,10 @@ const TextFieldSection = ({ id }: Pick<CardProps, "id">) => {
           $isFocused={isFocused}
           $inputType={inputType}
           variant="standard"
+          value={contents}
+          onChange={(e) => {
+            handleDescriptionChange(e);
+          }}
           placeholder={handlePlaceholder()}
           defaultValue={contents}
           disabled={!isTitle}

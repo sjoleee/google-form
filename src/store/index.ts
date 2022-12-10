@@ -186,6 +186,30 @@ const cardSlice = createSlice({
       targetCard.contents = filteredContents;
     },
 
+    setTitle: (state: CardProps[], action: ActionProps) => {
+      const targetCard = state.find((card) => card.id === action.payload.cardId) as CardProps;
+      targetCard.cardTitle = action.payload.text;
+    },
+
+    setText: (state: CardProps[], action: ActionProps) => {
+      const targetCard = state.find((card) => card.id === action.payload.cardId) as CardProps;
+
+      if (targetCard.inputType === InputTypes.TITLE) {
+        targetCard.contents = action.payload.text;
+      }
+      if (
+        targetCard.inputType === InputTypes.RADIO ||
+        targetCard.inputType === InputTypes.CHECKBOX ||
+        targetCard.inputType === InputTypes.SELECT
+      ) {
+        const contents = targetCard.contents as ItemTypeProps[];
+        const targetContent = contents.find(
+          (content) => content.id === action.payload.contentId,
+        ) as ItemTypeProps;
+        targetContent.text = action.payload.text;
+      }
+    },
+
     addEtcItem: (state: CardProps[], action: ActionProps) => {
       const contents = state.find((card) => card.id === action.payload.id)
         ?.contents as ItemTypeProps[];
@@ -229,6 +253,8 @@ export const {
   typeChange,
   addSelectItem,
   removeSelectItem,
+  setTitle,
+  setText,
   addEtcItem,
   toggleIsRequired,
 } = cardSlice.actions;

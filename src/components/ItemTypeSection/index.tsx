@@ -9,6 +9,7 @@ import {
   InputTypes,
   ItemTypeProps,
   removeSelectItem,
+  setText,
   StateProps,
 } from "../../store";
 import * as S from "./styles";
@@ -37,6 +38,13 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
 
   const { control } = useForm();
 
+  const handleChangeContentText = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    contentId: string,
+  ) => {
+    dispatch(setText({ cardId: id, contentId, text: e.target.value }));
+  };
+
   return (
     <>
       {contents.map((content) => (
@@ -54,6 +62,10 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
                 id="standard-basic"
                 $isFocused={isFocused}
                 variant="standard"
+                value={content.text}
+                onChange={(e) => {
+                  handleChangeContentText(e, content.id);
+                }}
                 defaultValue={content.isEtc ? "기타..." : content.text}
                 disabled={content.isEtc}
               />
