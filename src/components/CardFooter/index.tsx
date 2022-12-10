@@ -1,11 +1,21 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { CardProps, copyCard, removeCard } from "../../store";
+import { CardProps, copyCard, removeCard, toggleIsRequired } from "../../store";
 import * as S from "./styles";
 
 const CardFooter = ({ id }: Pick<CardProps, "id">) => {
   const dispatch = useDispatch();
+
+  const isRequired = useSelector((state: CardProps[]) => {
+    const currentCard = state.find((card) => card.id === id) as CardProps;
+    return currentCard.isRequired;
+  });
+
+  const handleChange = () => {
+    dispatch(toggleIsRequired({ id }));
+  };
+
   return (
     <S.Container>
       <S.Copy
@@ -22,9 +32,12 @@ const CardFooter = ({ id }: Pick<CardProps, "id">) => {
       />
       <S.VerticalLine />
       <S.FormControlLabel
-        control={<S.Switch name="required" />}
+        control={<S.Switch name="required" checked={isRequired} onChange={handleChange} />}
         label="필수"
         labelPlacement="start"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
       />
     </S.Container>
   );
