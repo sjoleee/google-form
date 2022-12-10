@@ -4,15 +4,19 @@ import { useSelector } from "react-redux";
 import * as S from "./styles";
 import Card from "../../components/Card";
 import AddCardButton from "../../components/AddCardButton";
-import { CardProps, InputTypes } from "../../store";
+import { InputTypes, StateProps } from "../../store";
 
 const Form = () => {
-  const cards = useSelector((state: CardProps[]) => state);
+  const { cards } = useSelector((state: StateProps) => state);
+
+  const openPreviewTab = () => {
+    window.open("/preview", "_blank");
+  };
 
   return (
     <>
       <S.Header>
-        <S.Eye />
+        <S.Eye onClick={openPreviewTab} />
       </S.Header>
       <S.Container>
         <S.CardList>

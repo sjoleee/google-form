@@ -1,5 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const Preview = () => <div>preview</div>;
+import { StateProps } from "../../store";
+
+const Preview = () => {
+  const { cards } = useSelector((state: StateProps) => state);
+
+  return <div>{cards.length}</div>;
+};
 
 export default Preview;

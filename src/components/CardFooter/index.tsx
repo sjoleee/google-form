@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { CardProps, copyCard, removeCard, toggleIsRequired } from "../../store";
+import { CardProps, copyCard, removeCard, StateProps, toggleIsRequired } from "../../store";
 import * as S from "./styles";
 
 const CardFooter = ({ id }: Pick<CardProps, "id">) => {
   const dispatch = useDispatch();
 
-  const isRequired = useSelector((state: CardProps[]) => {
-    const currentCard = state.find((card) => card.id === id) as CardProps;
+  const isRequired = useSelector((state: StateProps) => {
+    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
     return currentCard.isRequired;
   });
 

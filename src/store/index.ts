@@ -1,4 +1,7 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 
 export interface CardProps {
   id: string;
@@ -22,6 +25,11 @@ interface PayloadProps {
 interface ActionProps {
   type: string;
   payload: PayloadProps;
+}
+
+export interface StateProps {
+  cards: CardProps[];
+  _persist: any;
 }
 
 export enum InputTypes {
@@ -191,7 +199,27 @@ const cardSlice = createSlice({
   },
 });
 
-const store = configureStore({ reducer: cardSlice.reducer });
+const reducers = combineReducers({
+  cards: cardSlice.reducer,
+});
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["cards"],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
 export type RootState = ReturnType<typeof store.getState>;
 export const {
   addCard,

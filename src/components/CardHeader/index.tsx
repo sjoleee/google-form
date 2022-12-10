@@ -3,20 +3,20 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
-import { CardProps, InputTypes, typeChange } from "../../store";
+import { CardProps, InputTypes, StateProps, typeChange } from "../../store";
 import { extendedCardProps } from "../Card";
 import * as S from "./styles";
 
 const CardHeader = ({ id, isTitle }: Pick<extendedCardProps, "id" | "isTitle">) => {
   const { control, register } = useForm();
   const dispatch = useDispatch();
-  const isFocused = useSelector((state: CardProps[]) => {
-    const currentCard = state.find((card) => card.id === id) as CardProps;
+  const isFocused = useSelector((state: StateProps) => {
+    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
     return currentCard.isFocused;
   }, shallowEqual);
 
   const { cardTitle } = useSelector(
-    (state: CardProps[]) => state.find((card) => card.id === id) as CardProps,
+    (state: StateProps) => state.cards.find((card) => card.id === id) as CardProps,
     shallowEqual,
   );
 
