@@ -52,7 +52,7 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
                 id="standard-basic"
                 $isFocused={isFocused}
                 variant="standard"
-                defaultValue={content.isEtc ? "기타..." : `옵션 ${contents.length}`}
+                defaultValue={content.isEtc ? "기타..." : content.text}
                 disabled={content.isEtc}
               />
             )}
@@ -81,7 +81,7 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
                 addSelectItem({
                   id,
                   contentId,
-                  text: `옵션 ${contents.length + 1}`,
+                  text: `옵션 ${contents.filter((content) => !content.isEtc).length + 1}`,
                 }),
               );
             }}

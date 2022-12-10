@@ -53,6 +53,16 @@ const createNewCard = (cardTitle = "") => ({
   isFocused: true,
 });
 
+const sortEtcItem = (currentContents: ItemTypeProps[]) => {
+  const etcIndex = currentContents.findIndex((content) => content.isEtc);
+  if (etcIndex !== -1) {
+    const etcItem = { ...currentContents[etcIndex] };
+    currentContents.splice(etcIndex, 1);
+    currentContents.push(etcItem);
+  }
+  return currentContents;
+};
+
 const cardSlice = createSlice({
   name: "Reducer",
   initialState: [initialCards] as CardProps[],
@@ -109,6 +119,7 @@ const cardSlice = createSlice({
       const contents = state.find((card) => card.id === action.payload.id)
         ?.contents as ItemTypeProps[];
       contents.push({ id: action.payload.contentId, text: action.payload.text });
+      sortEtcItem(contents);
     },
 
     removeSelectItem: (state: CardProps[], action: actionProps) => {
