@@ -37,7 +37,7 @@ const Card = ({ isTitle, id, isFocused, inputType }: extendedCardProps) => {
         ) : (
           <ItemTypeSection id={id} />
         )}
-        {isFocused ? <CardFooter /> : null}
+        {isFocused ? <CardFooter id={id} /> : null}
       </S.Card>
     </S.Contanier>
   );

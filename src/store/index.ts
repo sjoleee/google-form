@@ -81,6 +81,18 @@ const cardSlice = createSlice({
       return newState;
     },
 
+    copyCard: (state: CardProps[], action: actionProps) => {
+      const newState = state.map((card) => ({ ...card, isFocused: false }));
+      const targetCardIndex = newState.findIndex((card) => card.id === action.payload.cardId);
+      const copiedCard = {
+        ...newState[targetCardIndex],
+        id: action.payload.copiedCardId,
+        isFocused: true,
+      };
+      newState.splice(targetCardIndex, 0, copiedCard);
+      return newState;
+    },
+
     focus: (state: CardProps[], action: actionProps) => {
       const newState = state.map((card) =>
         action.payload.id === card.id
@@ -154,7 +166,7 @@ const cardSlice = createSlice({
 
 const store = configureStore({ reducer: cardSlice.reducer });
 export type RootState = ReturnType<typeof store.getState>;
-export const { addCard, focus, typeChange, addSelectItem, removeSelectItem, addEtcItem } =
+export const { addCard, copyCard, focus, typeChange, addSelectItem, removeSelectItem, addEtcItem } =
   cardSlice.actions;
 
 export default store;
