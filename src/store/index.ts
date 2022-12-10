@@ -6,6 +6,7 @@ export interface CardProps {
   inputType: string;
   contents: string | ItemTypeProps[];
   isFocused: boolean;
+  isRequired: boolean;
 }
 
 export interface ItemTypeProps {
@@ -38,6 +39,7 @@ const initialCards = {
   inputType: InputTypes.TITLE,
   contents: "",
   isFocused: false,
+  isRequired: false,
 };
 
 const createNewCard = (cardTitle = "") => ({
@@ -51,6 +53,7 @@ const createNewCard = (cardTitle = "") => ({
     },
   ],
   isFocused: true,
+  isRequired: false,
 });
 
 const sortEtcItem = (currentContents: ItemTypeProps[]) => {
@@ -180,6 +183,11 @@ const cardSlice = createSlice({
         ?.contents as ItemTypeProps[];
       contents.push({ id: action.payload.contentId, isEtc: true });
     },
+
+    toggleIsRequired: (state: CardProps[], action: ActionProps) => {
+      const targetCard = state.find((card) => card.id === action.payload.id) as CardProps;
+      targetCard.isRequired = !targetCard.isRequired;
+    },
   },
 });
 
@@ -194,6 +202,7 @@ export const {
   addSelectItem,
   removeSelectItem,
   addEtcItem,
+  toggleIsRequired,
 } = cardSlice.actions;
 
 export default store;
