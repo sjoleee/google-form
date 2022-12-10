@@ -1,24 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import * as S from "./styles";
-import Card from "./components/Card";
-import AddCardButton from "./components/AddCardButton";
-import { CardProps, InputTypes } from "./store";
+import Form from "./pages/Form";
+import Preview from "./pages/Preview";
 
-const App = () => {
-  const cards = useSelector((state: CardProps[]) => state);
-
-  return (
-    <S.Container>
-      <S.CardList>
-        {cards.map((card) => (
-          <Card key={card.id} isTitle={card.inputType === InputTypes.TITLE} {...card} />
-        ))}
-      </S.CardList>
-      <AddCardButton />
-    </S.Container>
-  );
-};
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Form />} />
+      <Route path="/preview" element={<Preview />} />
+    </Routes>
+  </BrowserRouter>
+);
 
 export default App;
