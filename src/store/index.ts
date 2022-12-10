@@ -10,7 +10,8 @@ export interface CardProps {
 
 export interface ItemTypeProps {
   id: string;
-  text: string;
+  text?: string;
+  isEtc?: boolean;
 }
 
 interface PayloadProps {
@@ -116,11 +117,18 @@ const cardSlice = createSlice({
       const filteredContents = contents.filter((item) => item.id !== action.payload.contentId);
       targetCard.contents = filteredContents;
     },
+
+    addEtcItem: (state: CardProps[], action: actionProps) => {
+      const contents = state.find((card) => card.id === action.payload.id)
+        ?.contents as ItemTypeProps[];
+      contents.push({ id: action.payload.contentId, isEtc: true });
+    },
   },
 });
 
 const store = configureStore({ reducer: cardSlice.reducer });
 export type RootState = ReturnType<typeof store.getState>;
-export const { addCard, focus, typeChange, addSelectItem, removeSelectItem } = cardSlice.actions;
+export const { addCard, focus, typeChange, addSelectItem, removeSelectItem, addEtcItem } =
+  cardSlice.actions;
 
 export default store;
