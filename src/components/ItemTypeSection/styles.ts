@@ -16,18 +16,24 @@ export const Container = styled.div<{ $isFocused: boolean }>`
       ::before {
         border-bottom: none;
       }
-      border-bottom: ${({ $isFocused, theme }) =>
-        $isFocused ? `1px solid ${theme.colors.GREY_HEAVY}` : "none"} !important;
+      :not(.Mui-disabled) {
+        border-bottom: ${({ $isFocused, theme }) =>
+          $isFocused ? `1px solid ${theme.colors.GREY_HEAVY}` : "none"} !important;
+      }
+      .Mui-disabled {
+        border-bottom: ${({ $isFocused, theme }) =>
+          $isFocused ? `1px dotted ${theme.colors.GREY_HEAVY}` : "none"} !important;
+      }
     }
+  }
 
-    div {
-      font-size: 14px;
-      ::before {
-        border-bottom: none;
-      }
-      ::after {
-        border-bottom: ${({ theme }) => `2px solid ${theme.colors.PURPLE_HEAVY}`};
-      }
+  & .MuiInputBase-root {
+    font-size: 14px;
+    ::before {
+      border-bottom: none !important;
+    }
+    ::after {
+      border-bottom: ${({ theme }) => `2px solid ${theme.colors.PURPLE_HEAVY}`};
     }
   }
 `;
@@ -36,24 +42,6 @@ export const TextField = styled(MuiTextField)<{ $isFocused: boolean }>`
   width: 637px;
   height: 30px;
   padding: 12px 8px;
-
-  & .MuiInputBase-root:hover {
-    ::before {
-      border-bottom: none;
-    }
-    border-bottom: ${({ $isFocused, theme }) =>
-      $isFocused ? `1px solid ${theme.colors.GREY_HEAVY}` : "none"} !important;
-  }
-
-  div {
-    font-size: 14px;
-    ::before {
-      border-bottom: none;
-    }
-    ::after {
-      border-bottom: ${({ theme }) => `2px solid ${theme.colors.PURPLE_HEAVY}`};
-    }
-  }
 `;
 
 export const DeleteIcon = styled(SvgDelete)`
