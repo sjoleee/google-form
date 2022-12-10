@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { TextField as MuiTextField } from "@mui/material";
 
-import { inputTypes } from "../../store";
+import { InputTypes } from "../../store";
 
 export const TextField = styled(MuiTextField)<{
   $isTitle: boolean;
@@ -10,7 +10,7 @@ export const TextField = styled(MuiTextField)<{
 }>`
   width: ${({ $isTitle, $inputType }) => {
     if ($isTitle) return "100%";
-    if ($inputType === inputTypes.TEXT) return "365px";
+    if ($inputType === InputTypes.TEXT) return "365px";
     return "620px";
   }};
 
