@@ -33,6 +33,7 @@ const Card = ({ isTitle, id }: extendedCardProps) => {
     <S.Contanier isFocused={isFocused}>
       <S.Card
         isFocused={isFocused}
+        isTitle={isTitle}
         onClick={() => {
           setIsFocused();
         }}
@@ -47,7 +48,7 @@ const Card = ({ isTitle, id }: extendedCardProps) => {
         ) : (
           <ItemTypeSection id={id} />
         )}
-        {isFocused ? <CardFooter id={id} /> : null}
+        {isFocused && !isTitle ? <CardFooter id={id} /> : null}
       </S.Card>
     </S.Contanier>
   );
