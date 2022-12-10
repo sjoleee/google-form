@@ -16,6 +16,7 @@ export const Card = styled.div<{ isFocused: boolean }>`
   min-height: 138px;
   width: 768px;
   padding: 24px;
+  padding-bottom: ${({ isFocused }) => (isFocused ? 0 : null)};
   box-sizing: border-box;
 `;
 

@@ -5,6 +5,7 @@ const defaultTheme: DefaultTheme = {
     WHITE: "#FFFFFF",
     BLACK: "#202125",
     PURPLE_LIGHT: "#F0EBF8",
+    PURPLE_MEDIUM: "#E1D7F1",
     PURPLE_HEAVY: "#673AB7",
     BLUE_LIGHT: "#EFF5FD",
     BLUE_HEAVY: "#4285F4",

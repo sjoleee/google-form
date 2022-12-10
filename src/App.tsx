@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import * as S from "./styles";
 import Card from "./components/Card";
 import AddCardButton from "./components/AddCardButton";
-import { CardProps, inputTypes } from "./store";
+import { CardProps, InputTypes } from "./store";
 
 const App = () => {
   const cards = useSelector((state: CardProps[]) => state);
@@ -13,7 +13,7 @@ const App = () => {
     <S.Container>
       <S.CardList>
         {cards.map((card) => (
-          <Card key={card.id} isTitle={card.inputType === inputTypes.TITLE} {...card} />
+          <Card key={card.id} isTitle={card.inputType === InputTypes.TITLE} {...card} />
         ))}
       </S.CardList>
       <AddCardButton />

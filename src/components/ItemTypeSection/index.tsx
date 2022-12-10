@@ -6,7 +6,7 @@ import {
   addEtcItem,
   addSelectItem,
   CardProps,
-  inputTypes,
+  InputTypes,
   ItemTypeProps,
   removeSelectItem,
 } from "../../store";
@@ -19,9 +19,10 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
     (state: CardProps[]) => state.find((card) => card.id === id)?.inputType,
   ) as string;
 
-  const isFocused = useSelector(
-    (state: CardProps[]) => state.find((card) => card.id === id)?.isFocused,
-  ) as boolean;
+  const isFocused = useSelector((state: CardProps[]) => {
+    const currentCard = state.find((card) => card.id === id) as CardProps;
+    return currentCard.isFocused;
+  });
 
   const contents = useSelector(
     (state: CardProps[]) => state.find((card) => card.id === id)?.contents,
@@ -39,9 +40,9 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
     <>
       {contents.map((content) => (
         <S.Container key={content.id} $isFocused={isFocused}>
-          {inputType === inputTypes.RADIO ? <S.Circle /> : null}
-          {inputType === inputTypes.CHECKBOX ? <S.Sqare /> : null}
-          {inputType === inputTypes.SELECT ? (
+          {inputType === InputTypes.RADIO ? <S.Circle /> : null}
+          {inputType === InputTypes.CHECKBOX ? <S.Sqare /> : null}
+          {inputType === InputTypes.SELECT ? (
             <S.NumberSpan>{contents.indexOf(content) + 1}</S.NumberSpan>
           ) : null}
           <Controller
@@ -68,9 +69,9 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
       ))}
       {isFocused ? (
         <S.Container $isFocused={isFocused}>
-          {inputType === inputTypes.RADIO ? <S.Circle /> : null}
-          {inputType === inputTypes.CHECKBOX ? <S.Sqare /> : null}
-          {inputType === inputTypes.SELECT ? (
+          {inputType === InputTypes.RADIO ? <S.Circle /> : null}
+          {inputType === InputTypes.CHECKBOX ? <S.Sqare /> : null}
+          {inputType === InputTypes.SELECT ? (
             <S.NumberSpan>{contents.length + 1}</S.NumberSpan>
           ) : null}
           <S.ItemAddButton
@@ -88,7 +89,7 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
           >
             옵션 추가
           </S.ItemAddButton>
-          {inputType !== inputTypes.SELECT && !haveEtc ? (
+          {inputType !== InputTypes.SELECT && !haveEtc ? (
             <>
               <span>또는</span>
               <S.EtcAddButton

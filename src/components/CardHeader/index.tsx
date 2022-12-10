@@ -3,14 +3,19 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
-import { CardProps, inputTypes, typeChange } from "../../store";
+import { CardProps, InputTypes, typeChange } from "../../store";
 import { extendedCardProps } from "../Card";
 import * as S from "./styles";
 
 const CardHeader = ({ id, isTitle }: Pick<extendedCardProps, "id" | "isTitle">) => {
   const { control, register } = useForm();
   const dispatch = useDispatch();
-  const { isFocused, cardTitle } = useSelector(
+  const isFocused = useSelector((state: CardProps[]) => {
+    const currentCard = state.find((card) => card.id === id) as CardProps;
+    return currentCard.isFocused;
+  }, shallowEqual);
+
+  const { cardTitle } = useSelector(
     (state: CardProps[]) => state.find((card) => card.id === id) as CardProps,
     shallowEqual,
   );
@@ -41,12 +46,12 @@ const CardHeader = ({ id, isTitle }: Pick<extendedCardProps, "id" | "isTitle">) 
           name="inputTypeSelect"
           control={control}
           render={() => (
-            <S.Select onChange={handleChange} defaultValue={inputTypes.RADIO}>
-              <MenuItem value={inputTypes.TEXT}>단답형</MenuItem>
-              <MenuItem value={inputTypes.TEXTAREA}>장문형</MenuItem>
-              <MenuItem value={inputTypes.RADIO}>객관식 질문</MenuItem>
-              <MenuItem value={inputTypes.CHECKBOX}>체크박스</MenuItem>
-              <MenuItem value={inputTypes.SELECT}>드롭다운</MenuItem>
+            <S.Select onChange={handleChange} defaultValue={InputTypes.RADIO}>
+              <MenuItem value={InputTypes.TEXT}>단답형</MenuItem>
+              <MenuItem value={InputTypes.TEXTAREA}>장문형</MenuItem>
+              <MenuItem value={InputTypes.RADIO}>객관식 질문</MenuItem>
+              <MenuItem value={InputTypes.CHECKBOX}>체크박스</MenuItem>
+              <MenuItem value={InputTypes.SELECT}>드롭다운</MenuItem>
             </S.Select>
           )}
         />
