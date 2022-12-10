@@ -26,7 +26,7 @@ const Card = ({ isTitle, id }: extendedCardProps) => {
   );
 
   const setIsFocused = () => {
-    dispatch(focus({ id }));
+    if (!isFocused) dispatch(focus({ id }));
   };
 
   return (
