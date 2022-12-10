@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Contanier = styled.div<{ isFocused: boolean }>`
+export const Container = styled.div<{ isFocused: boolean }>`
   position: relative;
   border-radius: 8px;
   overflow: hidden;

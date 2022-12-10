@@ -30,7 +30,7 @@ const Card = ({ isTitle, id }: extendedCardProps) => {
   };
 
   return (
-    <S.Contanier isFocused={isFocused}>
+    <S.Container isFocused={isFocused}>
       <S.Card
         isFocused={isFocused}
         isTitle={isTitle}
@@ -50,7 +50,7 @@ const Card = ({ isTitle, id }: extendedCardProps) => {
         )}
         {isFocused && !isTitle ? <CardFooter id={id} /> : null}
       </S.Card>
-    </S.Contanier>
+    </S.Container>
   );
 };
 

@@ -13,9 +13,9 @@ const PreviewCard = ({ id }: Pick<CardProps, "id">) => {
   const isTitle = inputType === InputTypes.TITLE;
 
   return (
-    <S.Contanier>
+    <S.Container>
       <S.Card isTitle={isTitle}>{isTitle ? <S.TitleHighlight /> : null}</S.Card>
-    </S.Contanier>
+    </S.Container>
   );
 };
 
