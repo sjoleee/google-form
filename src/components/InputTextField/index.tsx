@@ -15,7 +15,7 @@ const InputTextField = ({ id }: Pick<CardProps, "id">) => {
 
   return (
     <Controller
-      name="TextFieldInput"
+      name={id}
       control={control}
       render={({ field: { onChange } }) => (
         <S.TextField

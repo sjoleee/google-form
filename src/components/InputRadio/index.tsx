@@ -23,7 +23,7 @@ const InputRadio = ({ id }: Pick<CardProps, "id">) => {
   return (
     <Controller
       control={control}
-      name={cardTitle}
+      name={id}
       render={({ field: { onChange } }) => (
         <>
           {contents.map((content) => (
