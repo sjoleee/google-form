@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 import { CardProps, StateProps } from "../../store";
 import * as S from "./styles";
 
 const InputTextField = ({ id }: Pick<CardProps, "id">) => {
-  const { control } = useForm();
+  const { control } = useFormContext();
 
   const inputType = useSelector((state: StateProps) => {
     const currentCard = state.cards.find((card) => card.id === id) as CardProps;
@@ -17,12 +17,13 @@ const InputTextField = ({ id }: Pick<CardProps, "id">) => {
     <Controller
       name="TextFieldInput"
       control={control}
-      render={() => (
+      render={({ field: { onChange } }) => (
         <S.TextField
+          onChange={onChange}
           id="standard-basic"
           variant="standard"
           placeholder="내 답변"
-          inputType={inputType}
+          $inputType={inputType}
         />
       )}
     />

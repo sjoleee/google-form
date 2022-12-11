@@ -4,9 +4,9 @@ import { TextField as MuiTextField } from "@mui/material";
 import { InputTypes } from "../../store";
 
 export const TextField = styled(MuiTextField)<{
-  inputType: string;
+  $inputType: string;
 }>`
-  width: ${({ inputType }) => (inputType === InputTypes.TEXT ? "295px" : "590px")};
+  width: ${({ $inputType }) => ($inputType === InputTypes.TEXT ? "295px" : "590px")};
 
   div {
     font-size: 14px;
