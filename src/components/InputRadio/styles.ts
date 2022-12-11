@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { TextField as MuiTextField } from "@mui/material";
 
-export const RadioContainer = styled.div`
+export const RadioContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 16px;
