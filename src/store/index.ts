@@ -101,6 +101,13 @@ const cardSlice = createSlice({
         id: action.payload.copiedCardId,
         isFocused: true,
       };
+      if (typeof copiedCard.contents === "object") {
+        const itemTypeCopiedCardContents = copiedCard.contents.map((content, index) => ({
+          ...content,
+          id: String(Number(action.payload.copiedCardId) + index),
+        }));
+        copiedCard.contents = itemTypeCopiedCardContents;
+      }
       copiedState.splice(targetCardIndex + 1, 0, copiedCard);
       return copiedState;
     },
