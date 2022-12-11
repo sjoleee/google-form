@@ -25,7 +25,7 @@ const InputRadio = ({ id }: Pick<CardProps, "id">) => {
       control={control}
       name={id}
       render={({ field: { onChange } }) => (
-        <>
+        <S.RadioContainer>
           {contents.map((content) => (
             <div key={content.id}>
               <S.Radio
@@ -42,7 +42,7 @@ const InputRadio = ({ id }: Pick<CardProps, "id">) => {
                   }
                 }}
               />
-              <label htmlFor={content.id}>
+              <S.Label htmlFor={content.id}>
                 {content.isEtc ? (
                   <>
                     <span>기타: </span>
@@ -60,10 +60,10 @@ const InputRadio = ({ id }: Pick<CardProps, "id">) => {
                 ) : (
                   content.text
                 )}
-              </label>
+              </S.Label>
             </div>
           ))}
-        </>
+        </S.RadioContainer>
       )}
     />
   );
