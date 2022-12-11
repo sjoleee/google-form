@@ -9,6 +9,8 @@ import {
   InputTypes,
   ItemTypeProps,
   removeSelectItem,
+  setText,
+  StateProps,
 } from "../../store";
 import * as S from "./styles";
 
@@ -16,25 +18,32 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
   const dispatch = useDispatch();
 
   const inputType = useSelector(
-    (state: CardProps[]) => state.find((card) => card.id === id)?.inputType,
+    (state: StateProps) => state.cards.find((card) => card.id === id)?.inputType,
   ) as string;
 
-  const isFocused = useSelector((state: CardProps[]) => {
-    const currentCard = state.find((card) => card.id === id) as CardProps;
+  const isFocused = useSelector((state: StateProps) => {
+    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
     return currentCard.isFocused;
   });
 
   const contents = useSelector(
-    (state: CardProps[]) => state.find((card) => card.id === id)?.contents,
+    (state: StateProps) => state.cards.find((card) => card.id === id)?.contents,
   ) as ItemTypeProps[];
 
-  const haveEtc = useSelector((state: CardProps[]) => {
-    const currentCard = state.find((card) => card.id === id) as CardProps;
+  const haveEtc = useSelector((state: StateProps) => {
+    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
     const contents = currentCard.contents as ItemTypeProps[];
     return contents.some((content) => content.isEtc);
   });
 
   const { control } = useForm();
+
+  const handleChangeContentText = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    contentId: string,
+  ) => {
+    dispatch(setText({ cardId: id, contentId, text: e.target.value }));
+  };
 
   return (
     <>
@@ -53,6 +62,10 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
                 id="standard-basic"
                 $isFocused={isFocused}
                 variant="standard"
+                value={content.text}
+                onChange={(e) => {
+                  handleChangeContentText(e, content.id);
+                }}
                 defaultValue={content.isEtc ? "기타..." : content.text}
                 disabled={content.isEtc}
               />

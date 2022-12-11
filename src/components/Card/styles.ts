@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const Contanier = styled.div<{ isFocused: boolean }>`
+export const Container = styled.div<{ isFocused: boolean }>`
   position: relative;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: ${({ isFocused }) => (isFocused ? "0 3px 5px rgba(0, 0, 0, 0.3)" : null)};
 `;
 
-export const Card = styled.div<{ isFocused: boolean }>`
+export const Card = styled.div<{ isFocused: boolean; isTitle: boolean }>`
   display: flex;
   flex-direction: column;
   border: ${({ theme }) => `1px solid ${theme.colors.GREY_HEAVY}`};
@@ -16,7 +16,7 @@ export const Card = styled.div<{ isFocused: boolean }>`
   min-height: 138px;
   width: 768px;
   padding: 24px;
-  padding-bottom: ${({ isFocused }) => (isFocused ? 0 : null)};
+  padding-bottom: ${({ isFocused, isTitle }) => (isFocused && !isTitle ? 0 : null)};
   box-sizing: border-box;
 `;
 
@@ -36,6 +36,7 @@ export const TitleHighlight = styled.div`
   left: 0;
   background-color: ${({ theme }) => theme.colors.PURPLE_HEAVY};
   min-width: 100%;
+  width: 100%;
   height: 10px;
   z-index: 20;
 `;

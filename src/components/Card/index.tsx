@@ -1,7 +1,7 @@
 import React from "react";
 import { shallowEqual, useSelector, useDispatch } from "react-redux";
 
-import { CardProps, focus, InputTypes } from "../../store";
+import { CardProps, focus, InputTypes, StateProps } from "../../store";
 import CardFooter from "../CardFooter";
 import CardHeader from "../CardHeader";
 import ItemTypeSection from "../ItemTypeSection";
@@ -15,13 +15,13 @@ export interface extendedCardProps extends CardProps {
 const Card = ({ isTitle, id }: extendedCardProps) => {
   const dispatch = useDispatch();
 
-  const isFocused = useSelector((state: CardProps[]) => {
-    const currentCard = state.find((card) => card.id === id) as CardProps;
+  const isFocused = useSelector((state: StateProps) => {
+    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
     return currentCard.isFocused;
   }, shallowEqual);
 
   const { inputType } = useSelector(
-    (state: CardProps[]) => state.find((card) => card.id === id) as CardProps,
+    (state: StateProps) => state.cards.find((card) => card.id === id) as CardProps,
     shallowEqual,
   );
 
@@ -30,9 +30,10 @@ const Card = ({ isTitle, id }: extendedCardProps) => {
   };
 
   return (
-    <S.Contanier isFocused={isFocused}>
+    <S.Container isFocused={isFocused}>
       <S.Card
         isFocused={isFocused}
+        isTitle={isTitle}
         onClick={() => {
           setIsFocused();
         }}
@@ -47,9 +48,9 @@ const Card = ({ isTitle, id }: extendedCardProps) => {
         ) : (
           <ItemTypeSection id={id} />
         )}
-        {isFocused ? <CardFooter id={id} /> : null}
+        {isFocused && !isTitle ? <CardFooter id={id} /> : null}
       </S.Card>
-    </S.Contanier>
+    </S.Container>
   );
 };
 

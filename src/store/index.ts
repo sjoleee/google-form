@@ -1,4 +1,7 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 
 export interface CardProps {
   id: string;
@@ -22,6 +25,11 @@ interface PayloadProps {
 interface ActionProps {
   type: string;
   payload: PayloadProps;
+}
+
+export interface StateProps {
+  cards: CardProps[];
+  _persist: any;
 }
 
 export enum InputTypes {
@@ -93,6 +101,13 @@ const cardSlice = createSlice({
         id: action.payload.copiedCardId,
         isFocused: true,
       };
+      if (typeof copiedCard.contents === "object") {
+        const itemTypeCopiedCardContents = copiedCard.contents.map((content, index) => ({
+          ...content,
+          id: String(Number(action.payload.copiedCardId) + index),
+        }));
+        copiedCard.contents = itemTypeCopiedCardContents;
+      }
       copiedState.splice(targetCardIndex + 1, 0, copiedCard);
       return copiedState;
     },
@@ -178,6 +193,30 @@ const cardSlice = createSlice({
       targetCard.contents = filteredContents;
     },
 
+    setTitle: (state: CardProps[], action: ActionProps) => {
+      const targetCard = state.find((card) => card.id === action.payload.cardId) as CardProps;
+      targetCard.cardTitle = action.payload.text;
+    },
+
+    setText: (state: CardProps[], action: ActionProps) => {
+      const targetCard = state.find((card) => card.id === action.payload.cardId) as CardProps;
+
+      if (targetCard.inputType === InputTypes.TITLE) {
+        targetCard.contents = action.payload.text;
+      }
+      if (
+        targetCard.inputType === InputTypes.RADIO ||
+        targetCard.inputType === InputTypes.CHECKBOX ||
+        targetCard.inputType === InputTypes.SELECT
+      ) {
+        const contents = targetCard.contents as ItemTypeProps[];
+        const targetContent = contents.find(
+          (content) => content.id === action.payload.contentId,
+        ) as ItemTypeProps;
+        targetContent.text = action.payload.text;
+      }
+    },
+
     addEtcItem: (state: CardProps[], action: ActionProps) => {
       const contents = state.find((card) => card.id === action.payload.id)
         ?.contents as ItemTypeProps[];
@@ -191,7 +230,27 @@ const cardSlice = createSlice({
   },
 });
 
-const store = configureStore({ reducer: cardSlice.reducer });
+const reducers = combineReducers({
+  cards: cardSlice.reducer,
+});
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["cards"],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
 export type RootState = ReturnType<typeof store.getState>;
 export const {
   addCard,
@@ -201,6 +260,8 @@ export const {
   typeChange,
   addSelectItem,
   removeSelectItem,
+  setTitle,
+  setText,
   addEtcItem,
   toggleIsRequired,
 } = cardSlice.actions;

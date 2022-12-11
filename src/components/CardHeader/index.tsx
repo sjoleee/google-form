@@ -3,24 +3,28 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
-import { CardProps, InputTypes, typeChange } from "../../store";
+import { CardProps, InputTypes, setTitle, StateProps, typeChange } from "../../store";
 import { extendedCardProps } from "../Card";
 import * as S from "./styles";
 
 const CardHeader = ({ id, isTitle }: Pick<extendedCardProps, "id" | "isTitle">) => {
   const { control, register } = useForm();
   const dispatch = useDispatch();
-  const isFocused = useSelector((state: CardProps[]) => {
-    const currentCard = state.find((card) => card.id === id) as CardProps;
+  const isFocused = useSelector((state: StateProps) => {
+    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
     return currentCard.isFocused;
   }, shallowEqual);
 
   const { cardTitle } = useSelector(
-    (state: CardProps[]) => state.find((card) => card.id === id) as CardProps,
+    (state: StateProps) => state.cards.find((card) => card.id === id) as CardProps,
     shallowEqual,
   );
 
-  const handleChange = (e: SelectChangeEvent<unknown>) => {
+  const handleCardTitleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    dispatch(setTitle({ cardId: id, text: e.target.value }));
+  };
+
+  const handleInputTypeChange = (e: SelectChangeEvent<unknown>) => {
     dispatch(typeChange({ id, inputType: e.target.value as string }));
   };
 
@@ -35,6 +39,10 @@ const CardHeader = ({ id, isTitle }: Pick<extendedCardProps, "id" | "isTitle">) 
             id="filled-basic"
             $isTitle={isTitle}
             $isFocused={isFocused}
+            value={cardTitle}
+            onChange={(e) => {
+              handleCardTitleChange(e);
+            }}
             defaultValue={cardTitle}
             placeholder={isTitle ? "설문지 제목" : "질문"}
             variant="filled"
@@ -46,7 +54,7 @@ const CardHeader = ({ id, isTitle }: Pick<extendedCardProps, "id" | "isTitle">) 
           name="inputTypeSelect"
           control={control}
           render={() => (
-            <S.Select onChange={handleChange} defaultValue={InputTypes.RADIO}>
+            <S.Select onChange={handleInputTypeChange} defaultValue={InputTypes.RADIO}>
               <MenuItem value={InputTypes.TEXT}>단답형</MenuItem>
               <MenuItem value={InputTypes.TEXTAREA}>장문형</MenuItem>
               <MenuItem value={InputTypes.RADIO}>객관식 질문</MenuItem>

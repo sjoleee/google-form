@@ -1,18 +1,36 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 
-import { CardProps, InputTypes } from "../../store";
+import { CardProps, InputTypes, setText, StateProps } from "../../store";
 import * as S from "./styles";
 
 const TextFieldSection = ({ id }: Pick<CardProps, "id">) => {
+  const dispatch = useDispatch();
   const { control } = useForm();
 
-  const { contents, inputType, isFocused } = useSelector((state: CardProps[]) =>
-    state.find((card) => card.id === id),
-  ) as CardProps;
+  const inputType = useSelector((state: StateProps) => {
+    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
+    return currentCard.inputType;
+  }) as string;
+
+  const contents = useSelector((state: StateProps) => {
+    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
+    return currentCard.contents;
+  }) as string;
+
+  const isFocused = useSelector((state: StateProps) => {
+    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
+    return currentCard.isFocused;
+  }) as boolean;
 
   const isTitle = inputType === InputTypes.TITLE;
+
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    dispatch(setText({ cardId: id, text: e.target.value }));
+  };
 
   const handlePlaceholder = () => {
     if (isTitle) return "설문지 설명";
@@ -31,6 +49,10 @@ const TextFieldSection = ({ id }: Pick<CardProps, "id">) => {
           $isFocused={isFocused}
           $inputType={inputType}
           variant="standard"
+          value={contents}
+          onChange={(e) => {
+            handleDescriptionChange(e);
+          }}
           placeholder={handlePlaceholder()}
           defaultValue={contents}
           disabled={!isTitle}
