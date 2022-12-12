@@ -13,16 +13,10 @@ const InputTextField = ({ id }: Pick<CardProps, "id">) => {
     return currentCard.inputType;
   }) as string;
 
-  const isRequired = useSelector((state: StateProps) => {
-    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
-    return currentCard.isRequired;
-  }) as boolean;
-
   return (
     <Controller
       name={id}
       control={control}
-      rules={{ required: isRequired }}
       render={({ field: { onChange } }) => (
         <S.TextField
           onChange={onChange}

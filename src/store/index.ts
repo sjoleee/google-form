@@ -29,6 +29,7 @@ interface ActionProps {
 
 export interface StateProps {
   cards: CardProps[];
+  required: string;
   _persist: any;
 }
 
@@ -81,6 +82,15 @@ const deleteEtcItem = (currentContents: ItemTypeProps[]) => {
   }
   return currentContents;
 };
+
+const requiredSlice = createSlice({
+  name: "Required",
+  initialState: "",
+  reducers: {
+    setRequiredCardId: (state: string, action: ActionProps) => action.payload.cardId,
+    removeRequiredCardId: (state: string, action: ActionProps) => "",
+  },
+});
 
 const cardSlice = createSlice({
   name: "Reducer",
@@ -170,9 +180,9 @@ const cardSlice = createSlice({
         targetCard.contents = "";
       }
       if (
-        (targetCard.inputType === InputTypes.RADIO ||
-          targetCard.inputType === InputTypes.CHECKBOX) &&
-        action.payload.inputType === InputTypes.SELECT
+        targetCard.inputType === InputTypes.RADIO &&
+        (action.payload.inputType === InputTypes.SELECT ||
+          action.payload.inputType === InputTypes.CHECKBOX)
       ) {
         deleteEtcItem(targetCard.contents as ItemTypeProps[]);
       }
@@ -232,6 +242,7 @@ const cardSlice = createSlice({
 
 const reducers = combineReducers({
   cards: cardSlice.reducer,
+  required: requiredSlice.reducer,
 });
 
 const persistConfig = {
@@ -265,5 +276,6 @@ export const {
   addEtcItem,
   toggleIsRequired,
 } = cardSlice.actions;
+export const { setRequiredCardId, removeRequiredCardId } = requiredSlice.actions;
 
 export default store;

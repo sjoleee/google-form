@@ -13,16 +13,10 @@ const InputSelect = ({ id }: Pick<CardProps, "id">) => {
     return currentCard.contents;
   }) as ItemTypeProps[];
 
-  const isRequired = useSelector((state: StateProps) => {
-    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
-    return currentCard.isRequired;
-  }) as boolean;
-
   return (
     <Controller
       control={control}
       name={id}
-      rules={{ required: isRequired }}
       render={({ field: { onChange } }) => (
         <Select defaultValue="" onChange={onChange} autoWidth displayEmpty>
           <MenuItem value="">
