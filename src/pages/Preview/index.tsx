@@ -66,6 +66,7 @@ const Preview = () => {
         <S.PreviewSubmitSection>
           <S.SubmitButton type="submit">제출</S.SubmitButton>
           <S.ClearButton
+            type="button"
             onClick={() => {
               window.location.reload();
             }}
