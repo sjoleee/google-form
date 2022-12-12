@@ -50,7 +50,7 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
   };
 
   return (
-    <Droppable droppableId="asdf" type="content">
+    <Droppable droppableId={id} type="content">
       {(provided) => (
         <div ref={provided.innerRef} {...provided.droppableProps}>
           {contents.map((content, idx) => (
@@ -138,6 +138,7 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
               ) : null}
             </S.Container>
           ) : null}
+          {provided.placeholder}
         </div>
       )}
     </Droppable>
