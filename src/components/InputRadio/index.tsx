@@ -20,10 +20,16 @@ const InputRadio = ({ id }: Pick<CardProps, "id">) => {
     return currentCard.cardTitle;
   }) as string;
 
+  const isRequired = useSelector((state: StateProps) => {
+    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
+    return currentCard.isRequired;
+  }) as boolean;
+
   return (
     <Controller
       control={control}
       name={id}
+      rules={{ required: isRequired }}
       render={({ field: { onChange } }) => (
         <S.RadioContainer>
           {contents.map((content) => (
@@ -31,7 +37,7 @@ const InputRadio = ({ id }: Pick<CardProps, "id">) => {
               <S.Radio
                 ref={etcRefRadio}
                 type="radio"
-                name={cardTitle}
+                name={id}
                 id={content.id}
                 value={content.isEtc ? etcRef.current?.value : content.text}
                 onChange={(e) => {
