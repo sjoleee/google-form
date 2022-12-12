@@ -57,7 +57,7 @@ const createNewCard = (cardTitle = "") => ({
   inputType: InputTypes.RADIO,
   contents: [
     {
-      id: String(Date.now()),
+      id: String(Date.now() + 1),
       text: "옵션 1",
     },
   ],
