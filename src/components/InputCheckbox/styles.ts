@@ -4,7 +4,7 @@ import { TextField as MuiTextField } from "@mui/material";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 `;
 
 export const TextField = styled(MuiTextField)`

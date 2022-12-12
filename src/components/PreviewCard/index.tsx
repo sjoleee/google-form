@@ -15,11 +15,14 @@ const PreviewCard = ({ id }: Pick<CardProps, "id">) => {
     return currentCard.inputType;
   }) as string;
 
+  const requiredCardId = useSelector((state: StateProps) => state.required);
+
   const isTitle = inputType === InputTypes.TITLE;
+  const needToCompleteRequired = requiredCardId === id;
 
   return (
     <S.Container>
-      <S.Card>
+      <S.Card needToCompleteRequired={needToCompleteRequired}>
         {isTitle ? <S.TitleHighlight /> : null}
         <PreviewCardTitle id={id} />
         {inputType === InputTypes.TEXT ? <InputTextField id={id} /> : null}
@@ -27,6 +30,11 @@ const PreviewCard = ({ id }: Pick<CardProps, "id">) => {
         {inputType === InputTypes.RADIO ? <InputRadio id={id} /> : null}
         {inputType === InputTypes.CHECKBOX ? <InputCheckbox id={id} /> : null}
         {inputType === InputTypes.SELECT ? <InputSelect id={id} /> : null}
+        {needToCompleteRequired ? (
+          <S.RequiredSection>
+            <S.RequiredSpan>필수 질문입니다.</S.RequiredSpan>
+          </S.RequiredSection>
+        ) : null}
       </S.Card>
     </S.Container>
   );

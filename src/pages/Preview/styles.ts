@@ -17,3 +17,12 @@ export const ClearButton = styled.button`
     background-color: ${({ theme }) => theme.colors.BLUE_LIGHT};
   }
 `;
+
+export const SubmitButton = styled.button`
+  width: 72px;
+  height: 36px;
+  background-color: ${({ theme }) => theme.colors.PURPLE_HEAVY};
+  color: ${({ theme }) => theme.colors.WHITE};
+  border: none;
+  border-radius: 4px;
+`;

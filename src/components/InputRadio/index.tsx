@@ -15,11 +15,6 @@ const InputRadio = ({ id }: Pick<CardProps, "id">) => {
     return currentCard.contents;
   }) as ItemTypeProps[];
 
-  const cardTitle = useSelector((state: StateProps) => {
-    const currentCard = state.cards.find((card) => card.id === id) as CardProps;
-    return currentCard.cardTitle;
-  }) as string;
-
   return (
     <Controller
       control={control}
@@ -31,7 +26,7 @@ const InputRadio = ({ id }: Pick<CardProps, "id">) => {
               <S.Radio
                 ref={etcRefRadio}
                 type="radio"
-                name={cardTitle}
+                name={id}
                 id={content.id}
                 value={content.isEtc ? etcRef.current?.value : content.text}
                 onChange={(e) => {

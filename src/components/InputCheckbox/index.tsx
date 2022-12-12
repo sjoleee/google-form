@@ -15,30 +15,28 @@ const InputCheckbox = ({ id }: Pick<CardProps, "id">) => {
 
   return (
     <S.Container>
-      {contents.map((content) =>
-        content.isEtc ? null : (
-          <Controller
-            key={content.id}
-            name={`${id}.${content.id}`}
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <S.CheckboxContainer>
-                <S.Checkbox
-                  type="checkbox"
-                  id={content.id}
-                  value={content.text}
-                  onChange={(e) => {
-                    onChange(e.currentTarget.checked);
-                  }}
-                />
-                <label htmlFor={content.id}>
-                  <span>{content.text}</span>
-                </label>
-              </S.CheckboxContainer>
-            )}
-          />
-        ),
-      )}
+      {contents.map((content) => (
+        <Controller
+          key={content.id}
+          name={`${id}.${content.id}`}
+          control={control}
+          render={({ field: { onChange } }) => (
+            <S.CheckboxContainer>
+              <S.Checkbox
+                type="checkbox"
+                id={content.id}
+                value={content.text}
+                onChange={(e) => {
+                  onChange(e.currentTarget.checked);
+                }}
+              />
+              <label htmlFor={content.id}>
+                <span>{content.text}</span>
+              </label>
+            </S.CheckboxContainer>
+          )}
+        />
+      ))}
     </S.Container>
   );
 };
