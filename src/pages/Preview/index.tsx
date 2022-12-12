@@ -47,7 +47,6 @@ const Preview = () => {
       }
     }
   };
-  // const handleError = (e) => {};
 
   return (
     <FormProvider {...methods}>
