@@ -65,11 +65,10 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
                 id="standard-basic"
                 $isFocused={isFocused}
                 variant="standard"
-                value={content.text}
+                value={content.isEtc ? "기타..." : content.text}
                 onChange={(e) => {
                   handleChangeContentText(e, content.id);
                 }}
-                defaultValue={content.isEtc ? "기타..." : content.text}
                 disabled={content.isEtc}
               />
             )}

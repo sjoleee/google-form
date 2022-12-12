@@ -43,7 +43,6 @@ const CardHeader = ({ id, isTitle }: Pick<extendedCardProps, "id" | "isTitle">) 
             onChange={(e) => {
               handleCardTitleChange(e);
             }}
-            defaultValue={cardTitle}
             placeholder={isTitle ? "설문지 제목" : "질문"}
             variant="filled"
           />

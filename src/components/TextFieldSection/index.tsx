@@ -54,7 +54,6 @@ const TextFieldSection = ({ id }: Pick<CardProps, "id">) => {
             handleDescriptionChange(e);
           }}
           placeholder={handlePlaceholder()}
-          defaultValue={contents}
           disabled={!isTitle}
         />
       )}
