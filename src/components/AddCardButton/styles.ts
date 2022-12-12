@@ -9,7 +9,7 @@ export const Fab = styled(MuiFab)`
   border: ${({ theme }) => `1px solid ${theme.colors.GREY_HEAVY}`};
   border-radius: 8px;
   box-shadow: none;
-
+  margin-left: 16px;
   &:hover {
     background-color: ${({ theme }) => theme.colors.GREY_LIGHT};
   }
