@@ -33,6 +33,9 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
   const haveEtc = useSelector((state: StateProps) => {
     const currentCard = state.cards.find((card) => card.id === id) as CardProps;
     const contents = currentCard.contents as ItemTypeProps[];
+    if (currentCard.inputType === InputTypes.CHECKBOX) {
+      return true;
+    }
     return contents.some((content) => content.isEtc);
   });
 
