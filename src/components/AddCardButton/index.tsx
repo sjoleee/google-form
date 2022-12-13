@@ -4,6 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 import * as S from "./styles";
 import { addCard, StateProps } from "../../store";
+import { Tooltip } from "@mui/material";
 
 const AddCardButton = () => {
   const dispatch = useDispatch();
@@ -24,17 +25,19 @@ const AddCardButton = () => {
   }, []);
 
   return (
-    <S.Fab
-      color="primary"
-      aria-label="add"
-      onClick={() => {
-        dispatch(
-          addCard({ focusedCardIndex: String(focusedCardIndex), cardId: String(Date.now()) }),
-        );
-      }}
-    >
-      <AddIcon />
-    </S.Fab>
+    <Tooltip title="질문 추가" placement="right">
+      <S.Fab
+        color="primary"
+        aria-label="add"
+        onClick={() => {
+          dispatch(
+            addCard({ focusedCardIndex: String(focusedCardIndex), cardId: String(Date.now()) }),
+          );
+        }}
+      >
+        <AddIcon />
+      </S.Fab>
+    </Tooltip>
   );
 };
 

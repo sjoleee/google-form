@@ -6,6 +6,7 @@ import * as S from "./styles";
 import Card from "../../components/Card";
 import AddCardButton from "../../components/AddCardButton";
 import { InputTypes, moveCard, moveContent, StateProps } from "../../store";
+import { Tooltip } from "@mui/material";
 
 const Form = () => {
   const { cards } = useSelector((state: StateProps) => state);
@@ -43,7 +44,9 @@ const Form = () => {
   return (
     <>
       <S.Header>
-        <S.Eye onClick={openPreviewTab} />
+        <Tooltip title="미리보기">
+          <S.Eye onClick={openPreviewTab} />
+        </Tooltip>
       </S.Header>
       <DragDropContext onDragEnd={onDragEnd}>
         <S.Container>
