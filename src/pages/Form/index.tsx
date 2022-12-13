@@ -46,24 +46,26 @@ const Form = () => {
         <S.Eye onClick={openPreviewTab} />
       </S.Header>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="card" type="card" direction="vertical">
-          {(provided) => (
-            <S.Container {...provided.droppableProps} ref={provided.innerRef}>
-              <S.CardList>
-                {cards.map((card, idx) => (
-                  <Card
-                    key={card.id}
-                    idx={idx}
-                    isTitle={card.inputType === InputTypes.TITLE}
-                    {...card}
-                  />
-                ))}
-              </S.CardList>
-              <AddCardButton />
-              {provided.placeholder}
-            </S.Container>
-          )}
-        </Droppable>
+        <S.Container>
+          <Droppable droppableId="card" type="card" direction="vertical">
+            {(provided) => (
+              <div>
+                <S.CardList {...provided.droppableProps} ref={provided.innerRef}>
+                  {cards.map((card, idx) => (
+                    <Card
+                      key={card.id}
+                      idx={idx}
+                      isTitle={card.inputType === InputTypes.TITLE}
+                      {...card}
+                    />
+                  ))}
+                </S.CardList>
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+          <AddCardButton />
+        </S.Container>
       </DragDropContext>
     </>
   );
