@@ -57,7 +57,7 @@ const createNewCard = (cardTitle = "") => ({
   inputType: InputTypes.RADIO,
   contents: [
     {
-      id: String(Date.now()),
+      id: String(Date.now() + 1),
       text: "옵션 1",
     },
   ],
@@ -237,6 +237,20 @@ const cardSlice = createSlice({
       const targetCard = state.find((card) => card.id === action.payload.id) as CardProps;
       targetCard.isRequired = !targetCard.isRequired;
     },
+
+    moveCard: (state: CardProps[], action: ActionProps) => {
+      const copiedState = [...state];
+      const movingCard = copiedState.splice(Number(action.payload.sourceIndex), 1);
+      copiedState.splice(Number(action.payload.destinationIndex), 0, ...movingCard);
+      return copiedState;
+    },
+
+    moveContent: (state: CardProps[], action: ActionProps) => {
+      const targetCard = state.find((card) => card.id === action.payload.cardId) as CardProps;
+      const contents = targetCard.contents as ItemTypeProps[];
+      const tmp = contents.splice(Number(action.payload.sourceIndex), 1);
+      contents.splice(Number(action.payload.destinationIndex), 0, ...tmp);
+    },
   },
 });
 
@@ -275,6 +289,8 @@ export const {
   setText,
   addEtcItem,
   toggleIsRequired,
+  moveCard,
+  moveContent,
 } = cardSlice.actions;
 export const { setRequiredCardId, removeRequiredCardId } = requiredSlice.actions;
 

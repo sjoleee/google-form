@@ -1,4 +1,5 @@
 import React from "react";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -49,84 +50,98 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
   };
 
   return (
-    <>
-      {contents.map((content) => (
-        <S.Container key={content.id} $isFocused={isFocused}>
-          {inputType === InputTypes.RADIO ? <S.Circle /> : null}
-          {inputType === InputTypes.CHECKBOX ? <S.Sqare /> : null}
-          {inputType === InputTypes.SELECT ? (
-            <S.NumberSpan>{contents.indexOf(content) + 1}</S.NumberSpan>
-          ) : null}
-          <Controller
-            name="TextFieldInput"
-            control={control}
-            render={() => (
-              <S.TextField
-                id="standard-basic"
-                $isFocused={isFocused}
-                variant="standard"
-                value={content.text}
-                onChange={(e) => {
-                  handleChangeContentText(e, content.id);
-                }}
-                defaultValue={content.isEtc ? "기타..." : content.text}
-                disabled={content.isEtc}
-              />
-            )}
-          />
-          {isFocused && contents.length > 1 ? (
-            <S.DeleteIcon
-              onClick={() => {
-                dispatch(removeSelectItem({ cardId: id, contentId: content.id }));
-              }}
-            />
-          ) : null}
-        </S.Container>
-      ))}
-      {isFocused ? (
-        <S.Container $isFocused={isFocused}>
-          {inputType === InputTypes.RADIO ? <S.Circle /> : null}
-          {inputType === InputTypes.CHECKBOX ? <S.Sqare /> : null}
-          {inputType === InputTypes.SELECT ? (
-            <S.NumberSpan>{contents.length + 1}</S.NumberSpan>
-          ) : null}
-          <S.ItemAddButton
-            type="button"
-            onClick={() => {
-              const contentId = String(Date.now());
-              dispatch(
-                addSelectItem({
-                  id,
-                  contentId,
-                  text: `옵션 ${contents.filter((content) => !content.isEtc).length + 1}`,
-                }),
-              );
-            }}
-          >
-            옵션 추가
-          </S.ItemAddButton>
-          {inputType !== InputTypes.SELECT && !haveEtc ? (
-            <>
-              <span>또는</span>
-              <S.EtcAddButton
+    <Droppable droppableId={id} type="content">
+      {(provided) => (
+        <div ref={provided.innerRef} {...provided.droppableProps}>
+          {contents.map((content, idx) => (
+            <Draggable draggableId={content.id} index={idx} key={content.id}>
+              {(provided) => (
+                <S.Container
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  key={content.id}
+                  $isFocused={isFocused}
+                >
+                  <S.ContentDndHandle $isFocused={isFocused} {...provided.dragHandleProps} />
+                  {inputType === InputTypes.RADIO ? <S.Circle /> : null}
+                  {inputType === InputTypes.CHECKBOX ? <S.Sqare /> : null}
+                  {inputType === InputTypes.SELECT ? (
+                    <S.NumberSpan>{contents.indexOf(content) + 1}</S.NumberSpan>
+                  ) : null}
+                  <Controller
+                    name="TextFieldInput"
+                    control={control}
+                    render={() => (
+                      <S.TextField
+                        id="standard-basic"
+                        $isFocused={isFocused}
+                        variant="standard"
+                        value={content.isEtc ? "기타..." : content.text}
+                        onChange={(e) => {
+                          handleChangeContentText(e, content.id);
+                        }}
+                        disabled={content.isEtc}
+                      />
+                    )}
+                  />
+                  {isFocused && contents.length > 1 ? (
+                    <S.DeleteIcon
+                      onClick={() => {
+                        dispatch(removeSelectItem({ cardId: id, contentId: content.id }));
+                      }}
+                    />
+                  ) : null}
+                </S.Container>
+              )}
+            </Draggable>
+          ))}
+          {isFocused ? (
+            <S.Container $isFocused={isFocused}>
+              {inputType === InputTypes.RADIO ? <S.Circle /> : null}
+              {inputType === InputTypes.CHECKBOX ? <S.Sqare /> : null}
+              {inputType === InputTypes.SELECT ? (
+                <S.NumberSpan>{contents.length + 1}</S.NumberSpan>
+              ) : null}
+              <S.ItemAddButton
                 type="button"
                 onClick={() => {
                   const contentId = String(Date.now());
                   dispatch(
-                    addEtcItem({
+                    addSelectItem({
                       id,
                       contentId,
+                      text: `옵션 ${contents.filter((content) => !content.isEtc).length + 1}`,
                     }),
                   );
                 }}
               >
-                기타 추가
-              </S.EtcAddButton>
-            </>
+                옵션 추가
+              </S.ItemAddButton>
+              {inputType !== InputTypes.SELECT && !haveEtc ? (
+                <>
+                  <span>또는</span>
+                  <S.EtcAddButton
+                    type="button"
+                    onClick={() => {
+                      const contentId = String(Date.now());
+                      dispatch(
+                        addEtcItem({
+                          id,
+                          contentId,
+                        }),
+                      );
+                    }}
+                  >
+                    기타 추가
+                  </S.EtcAddButton>
+                </>
+              ) : null}
+            </S.Container>
           ) : null}
-        </S.Container>
-      ) : null}
-    </>
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 };
 
