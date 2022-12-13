@@ -51,8 +51,8 @@ const initialCards = {
   isRequired: false,
 };
 
-const createNewCard = (cardTitle = "") => ({
-  id: String(Date.now()),
+const createNewCard = (cardId: string, cardTitle = "") => ({
+  id: cardId,
   cardTitle,
   inputType: InputTypes.RADIO,
   contents: [
@@ -98,7 +98,16 @@ const cardSlice = createSlice({
   reducers: {
     addCard: (state: CardProps[], action: ActionProps) => {
       const copiedState = state.map((card) => ({ ...card, isFocused: false }));
-      copiedState.push(createNewCard(action.payload.cardTitle));
+
+      if (Number(action.payload.focusedCardIndex) > 0) {
+        copiedState.splice(
+          Number(action.payload.focusedCardIndex) + 1,
+          0,
+          createNewCard(action.payload.cardId, action.payload.cardTitle),
+        );
+      } else {
+        copiedState.push(createNewCard(action.payload.cardId, action.payload.cardTitle));
+      }
       return copiedState;
     },
 
