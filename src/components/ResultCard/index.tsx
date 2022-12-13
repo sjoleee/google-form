@@ -46,7 +46,15 @@ const ResultCard = ({ results }: any) => {
       const contentsResult = results[originalCardsArr[i].id];
 
       if (typeof contentsResult !== "object") {
-        if (contentsResult) resultCardData.answer.trueAnswer.push(contentsResult);
+        if (resultCardData.inputType === InputTypes.SELECT) {
+          const originalContents = originalCardsArr[i].contents as ItemTypeProps[];
+          const selectResultText = originalContents.find(
+            (content) => content.id === contentsResult,
+          )?.text;
+          if (selectResultText) resultCardData.answer.trueAnswer.push(selectResultText);
+        } else if (contentsResult) {
+          resultCardData.answer.trueAnswer.push(contentsResult);
+        }
       } else {
         const contentsResultArr = [] as { [key: string]: string }[];
         for (const property in contentsResult) {
@@ -81,9 +89,7 @@ const ResultCard = ({ results }: any) => {
   }, []);
 
   const textAnswer = (inputType: string) =>
-    inputType === InputTypes.TEXT ||
-    inputType === InputTypes.TEXTAREA ||
-    inputType === InputTypes.RADIO;
+    inputType === InputTypes.TEXT || inputType === InputTypes.TEXTAREA;
 
   const noAnswer = ({ trueAnswer, falseAnswer }: AnswerProps) => {
     if (trueAnswer.length === 0 && falseAnswer.length === 0) return true;
@@ -119,7 +125,7 @@ const ResultCard = ({ results }: any) => {
                 <S.TextAnswer>💬 {card.answer.trueAnswer}</S.TextAnswer>
               )}
 
-              {textAnswer(card.inputType) ? null : (
+              {textAnswer(card.inputType) ? null : card.answer.trueAnswer.length > 0 ? (
                 <S.SelectAnswerContainer>
                   <S.TrueAnswerMark>선택한 항목</S.TrueAnswerMark>
 
@@ -127,9 +133,12 @@ const ResultCard = ({ results }: any) => {
                     <S.SelectAnswer>✅ {answer}</S.SelectAnswer>
                   ))}
                 </S.SelectAnswerContainer>
+              ) : (
+                <S.NoTextAnswer> 응답하지 않았습니다.</S.NoTextAnswer>
               )}
 
-              {textAnswer(card.inputType) ? null : card.inputType !== InputTypes.SELECT ? (
+              {textAnswer(card.inputType) ? null : card.inputType !== InputTypes.SELECT &&
+                card.inputType !== InputTypes.RADIO ? (
                 <S.SelectAnswerContainer>
                   <S.FalseAnswerMark>선택하지 않은 항목</S.FalseAnswerMark>
                   {card.answer.falseAnswer.map((answer) => (
