@@ -17,18 +17,18 @@ let persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={defaultTheme}>
-        <Provider store={store}>
-          <GlobalStyle />
-          <Layout>
-            <PersistGate loading={null} persistor={persistor}>
-              <App />
-            </PersistGate>
-          </Layout>
-        </Provider>
-      </ThemeProvider>
-    </StyledEngineProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <StyledEngineProvider injectFirst>
+    <ThemeProvider theme={defaultTheme}>
+      <Provider store={store}>
+        <GlobalStyle />
+        <Layout>
+          <PersistGate loading={null} persistor={persistor}>
+            <App />
+          </PersistGate>
+        </Layout>
+      </Provider>
+    </ThemeProvider>
+  </StyledEngineProvider>,
+  // </React.StrictMode>,
 );
