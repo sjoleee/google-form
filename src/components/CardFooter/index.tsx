@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -18,18 +19,22 @@ const CardFooter = ({ id }: Pick<CardProps, "id">) => {
 
   return (
     <S.Container>
-      <S.Copy
-        onClick={(e) => {
-          e.stopPropagation();
-          dispatch(copyCard({ cardId: id, copiedCardId: String(Date.now()) }));
-        }}
-      />
-      <S.Trash
-        onClick={(e) => {
-          e.stopPropagation();
-          dispatch(removeCard({ cardId: id }));
-        }}
-      />
+      <Tooltip title="복사">
+        <S.Copy
+          onClick={(e) => {
+            e.stopPropagation();
+            dispatch(copyCard({ cardId: id, copiedCardId: String(Date.now()) }));
+          }}
+        />
+      </Tooltip>
+      <Tooltip title="삭제">
+        <S.Trash
+          onClick={(e) => {
+            e.stopPropagation();
+            dispatch(removeCard({ cardId: id }));
+          }}
+        />
+      </Tooltip>
       <S.VerticalLine />
       <S.FormControlLabel
         control={<S.Switch name="required" checked={isRequired} onChange={handleChange} />}
