@@ -32,32 +32,39 @@ const Card = ({ isTitle, id, idx }: extendedCardProps) => {
   };
 
   return (
-    <Draggable draggableId={id} index={idx} key={id}>
-      {(provided) => (
-        <S.Container ref={provided.innerRef} {...provided.draggableProps} isFocused={isFocused}>
-          <div {...provided.dragHandleProps}>손잡이</div>
-          <S.Card
-            isFocused={isFocused}
-            isTitle={isTitle}
-            onClick={() => {
-              setIsFocused();
-            }}
-          >
-            {isTitle ? <S.TitleHighlight /> : null}
-            <S.ClickHighlight isFocused={isFocused} />
-            <CardHeader isTitle={isTitle} id={id} />
-            {inputType === InputTypes.TITLE ||
-            inputType === InputTypes.TEXT ||
-            inputType === InputTypes.TEXTAREA ? (
-              <TextFieldSection id={id} />
-            ) : (
-              <ItemTypeSection id={id} />
-            )}
-            {isFocused && !isTitle ? <CardFooter id={id} /> : null}
-          </S.Card>
-        </S.Container>
-      )}
-    </Draggable>
+    <div>
+      <Draggable draggableId={id} index={idx} key={id}>
+        {(provided) => (
+          <S.Container ref={provided.innerRef} {...provided.draggableProps} isFocused={isFocused}>
+            <S.Card
+              isFocused={isFocused}
+              isTitle={isTitle}
+              onClick={() => {
+                setIsFocused();
+              }}
+            >
+              {isTitle ? (
+                <S.TitleHighlight />
+              ) : (
+                <S.CardDndHandle {...provided.dragHandleProps}>
+                  <S.Dots />
+                </S.CardDndHandle>
+              )}
+              <S.ClickHighlight isFocused={isFocused} />
+              <CardHeader isTitle={isTitle} id={id} />
+              {inputType === InputTypes.TITLE ||
+              inputType === InputTypes.TEXT ||
+              inputType === InputTypes.TEXTAREA ? (
+                <TextFieldSection id={id} />
+              ) : (
+                <ItemTypeSection id={id} />
+              )}
+              {isFocused && !isTitle ? <CardFooter id={id} /> : null}
+            </S.Card>
+          </S.Container>
+        )}
+      </Draggable>
+    </div>
   );
 };
 

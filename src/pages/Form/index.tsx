@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 import * as S from "./styles";
 import Card from "../../components/Card";
 import AddCardButton from "../../components/AddCardButton";
 import { InputTypes, moveCard, moveContent, StateProps } from "../../store";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 const Form = () => {
   const { cards } = useSelector((state: StateProps) => state);
@@ -46,7 +46,7 @@ const Form = () => {
         <S.Eye onClick={openPreviewTab} />
       </S.Header>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="card" type="card">
+        <Droppable droppableId="card" type="card" direction="vertical">
           {(provided) => (
             <S.Container {...provided.droppableProps} ref={provided.innerRef}>
               <S.CardList>

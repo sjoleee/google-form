@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { ReactComponent as SvgDots } from "../../assets/dots.svg";
 
 export const Container = styled.div<{ isFocused: boolean }>`
+  display: flex;
+  flex-direction: column;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
@@ -8,6 +11,7 @@ export const Container = styled.div<{ isFocused: boolean }>`
 `;
 
 export const Card = styled.div<{ isFocused: boolean; isTitle: boolean }>`
+  left: 300;
   display: flex;
   flex-direction: column;
   border: ${({ theme }) => `1px solid ${theme.colors.GREY_HEAVY}`};
@@ -39,4 +43,29 @@ export const TitleHighlight = styled.div`
   width: 100%;
   height: 10px;
   z-index: 20;
+`;
+
+export const CardDndHandle = styled.div`
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  width: 100%;
+  height: 30px;
+  z-index: 20;
+
+  :hover {
+    > :last-child {
+      visibility: visible;
+    }
+  }
+`;
+
+export const Dots = styled(SvgDots)`
+  visibility: hidden;
+  position: absolute;
+  left: calc(50% - 10px);
+  width: 20px;
+  z-index: 30;
 `;

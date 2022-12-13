@@ -4,13 +4,15 @@ import { TextField as MuiTextField } from "@mui/material";
 import { ReactComponent as SvgDelete } from "../../assets/delete.svg";
 import { ReactComponent as SvgSqare } from "../../assets/sqare.svg";
 import { ReactComponent as SvgCircle } from "../../assets/circle.svg";
+import { ReactComponent as SvgDots } from "../../assets/dots.svg";
 
 export const Container = styled.div<{ $isFocused: boolean }>`
+  position: relative;
   display: flex;
   width: 100%;
   align-items: center;
   font-size: 14px;
-
+  padding-left: 12px;
   :hover {
     & .MuiInputBase-root {
       ::before {
@@ -94,5 +96,21 @@ export const EtcAddButton = styled.button`
   color: ${({ theme }) => theme.colors.BLUE_HEAVY};
   :hover {
     background-color: ${({ theme }) => theme.colors.BLUE_LIGHT};
+  }
+`;
+
+export const ContentDndHandle = styled.div<{ $isFocused: boolean }>`
+  display: ${({ $isFocused }) => ($isFocused ? "flex" : "none")};
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 60%;
+  top: 10px;
+  width: 10px;
+  height: 60%;
+  z-index: 20;
+  border-radius: 4px;
+  :hover {
+    background-color: ${({ theme }) => theme.colors.PURPLE_MEDIUM};
   }
 `;

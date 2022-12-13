@@ -62,7 +62,7 @@ const ItemTypeSection = ({ id }: Pick<CardProps, "id">) => {
                   key={content.id}
                   $isFocused={isFocused}
                 >
-                  <div {...provided.dragHandleProps}>손잡이</div>
+                  <S.ContentDndHandle $isFocused={isFocused} {...provided.dragHandleProps} />
                   {inputType === InputTypes.RADIO ? <S.Circle /> : null}
                   {inputType === InputTypes.CHECKBOX ? <S.Sqare /> : null}
                   {inputType === InputTypes.SELECT ? (
