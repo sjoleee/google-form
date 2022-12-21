@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddIcon from "@mui/icons-material/Add";
+import { Tooltip } from "@mui/material";
 
 import * as S from "./styles";
 import { addCard, StateProps } from "../../store";
-import { Tooltip } from "@mui/material";
 
 const AddCardButton = () => {
   const dispatch = useDispatch();

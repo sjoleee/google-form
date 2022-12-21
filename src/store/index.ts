@@ -2,6 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
+import { PersistState } from "redux-persist/lib/types";
 
 export interface CardProps {
   id: string;
@@ -30,7 +31,7 @@ interface ActionProps {
 export interface StateProps {
   cards: CardProps[];
   required: string;
-  _persist: any;
+  _persist: PersistState;
 }
 
 export enum InputTypes {
@@ -57,7 +58,7 @@ const createNewCard = (cardId: string, cardTitle = "") => ({
   inputType: InputTypes.RADIO,
   contents: [
     {
-      id: String(Date.now() + 1),
+      id: String(Number(cardId) + 1),
       text: "옵션 1",
     },
   ],
@@ -88,7 +89,7 @@ const requiredSlice = createSlice({
   initialState: "",
   reducers: {
     setRequiredCardId: (state: string, action: ActionProps) => action.payload.cardId,
-    removeRequiredCardId: (state: string, action: ActionProps) => "",
+    removeRequiredCardId: () => "",
   },
 });
 

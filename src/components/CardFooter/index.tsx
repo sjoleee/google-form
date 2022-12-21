@@ -1,5 +1,5 @@
-import { Tooltip } from "@mui/material";
 import React from "react";
+import { Tooltip } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
 import { CardProps, copyCard, removeCard, StateProps, toggleIsRequired } from "../../store";

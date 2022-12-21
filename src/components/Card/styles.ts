@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { ReactComponent as SvgDots } from "../../assets/dots.svg";
 
 export const Container = styled.div<{ isFocused: boolean }>`
