@@ -26,7 +26,7 @@ const Preview = () => {
               (value) => !!value,
             );
             if (isRequiredComplete) {
-              dispatch(removeRequiredCardId({}));
+              dispatch(removeRequiredCardId());
               continue;
             } else {
               dispatch(setRequiredCardId({ cardId: cards[j].id }));
@@ -36,7 +36,7 @@ const Preview = () => {
             const isRequiredComplete = !!methods.getValues()[cards[j].id];
 
             if (isRequiredComplete) {
-              dispatch(removeRequiredCardId({}));
+              dispatch(removeRequiredCardId());
               continue;
             } else {
               dispatch(setRequiredCardId({ cardId: cards[j].id }));
@@ -56,7 +56,7 @@ const Preview = () => {
             handleClick();
             navigate("/preview/result", { state: methods.getValues() });
           } catch (e) {
-            console.log(e);
+            console.dir(e);
           }
         })}
       >

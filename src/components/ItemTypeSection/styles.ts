@@ -4,7 +4,6 @@ import { TextField as MuiTextField } from "@mui/material";
 import { ReactComponent as SvgDelete } from "../../assets/delete.svg";
 import { ReactComponent as SvgSqare } from "../../assets/sqare.svg";
 import { ReactComponent as SvgCircle } from "../../assets/circle.svg";
-import { ReactComponent as SvgDots } from "../../assets/dots.svg";
 
 export const Container = styled.div<{ $isFocused: boolean }>`
   position: relative;

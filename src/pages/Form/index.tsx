@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { Tooltip } from "@mui/material";
 
 import * as S from "./styles";
 import Card from "../../components/Card";
 import AddCardButton from "../../components/AddCardButton";
 import { InputTypes, moveCard, moveContent, StateProps } from "../../store";
-import { Tooltip } from "@mui/material";
 
 const Form = () => {
   const { cards } = useSelector((state: StateProps) => state);
@@ -16,7 +16,7 @@ const Form = () => {
     window.open("/preview", "_blank");
   };
 
-  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+  const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) {
       return;
     }
